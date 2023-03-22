@@ -1,0 +1,181 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* -------------------- HEADER --------------------  */
+.header {
+    height: 15%;
+    background-color: black;
+    align-items: center;
+    justify-content: space-between;
+}
+.title {
+    color: white;
+    font-size: 25px;
+}
+.logo {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+
+#header-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.nav-link:hover {
+    background-color: #2c2c2c;
+    color: white;
+}
+.nav-link.active {
+    background-color: #2c2c2c;
+    color: white;
+}
+.nav-link {
+    color: white;
+    text-decoration: none;
+}
+.searchbar > input {
+    width: 75%;
+}
+/* -- Search bar & Shop -- */
+.input-searchbar {
+    border: 2px solid white;
+    border-radius: 7px;
+}
+.image-searchbar {
+    background-color: black;
+    width: 10%;
+}
+.image-shop {
+    background-color: black;
+    width: 10%;
+}
+
+/* -------------------- BODY -------------------- */
+
+body {
+    background-color: #f0f0f0;
+}
+.column-bg-white {
+    background-color: white;
+}
+.bold-text {
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 0;
+}
+
+/* -- Description Feature -- */
+.description-feature {
+    margin-top: 30px;
+}
+.description-feature-text {
+    font-size: 12px;
+}
+
+/* -- Information Product -- */
+.image-and-infor-product {
+    margin-top: 15px;
+}
+.detail-product {
+    font-size: 15px;
+}
+.pay-price {
+    font-size: 15px;
+    margin-top: 15px;
+    margin-bottom: 0%;
+    font-weight: bold;
+}
+.old-price {
+    text-decoration: line-through;
+    font-size: 12px;
+}
+.before-discount-price {
+    margin-top: 15px;
+    font-size: 15px;
+    font-weight: bold;
+}
+/* Drop down */
+.image-dropdown {
+    width: 17px;
+}
+.btn-dropdown {
+    background-color: white;
+    color: black;
+    padding: 7px;
+    font-size: 15px;
+    border: 1px solid rgb(187, 179, 179);
+    border-radius: 10px;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropItem {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border: 2px solid white;
+    border-radius: 10px;
+    z-index: 1;
+}
+.dropItem a {
+    color: black;
+    font-size: 15px;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block; 
+}
+.show-drop-item {
+    display: block;
+}
+/* End Drop down */
+
+/* Information Customer */
+.information-customer {
+    margin-top: 5px;
+}
+.form-information {
+    width: 47%;
+    margin: 5px;
+}
+
+/* Ship Way */
+.ship-way {
+    margin-top: 5px;
+}
+.form-ship-way {
+    margin-top: 10px;
+}
+
+/* Accept to buy */
+.accept-to-buy {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.discount-text {
+    font-weight: bold;
+}
+.total-price {
+    margin-top: 15px;
+    font-size: 15px;
+    font-weight: bold;
+}
+.total-price-color {
+    color: red;
+}
+.btn-buy {
+    width: 100%;
+    font-size: 15px;
+}
+.text-thank-you {
+    margin-top: 5px;
+    text-align: center;
+    font-size: 12px;
+}

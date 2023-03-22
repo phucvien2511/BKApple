@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;1,400&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: #3e3e3e;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.white {
+    color: white;
+}
+/* -------------------- HEADER --------------------  */
+.header {
+    height: 20%;
+    background-color: black;
+    align-items: center;
+    justify-content: space-between;
+}
+.title {
+    font-size: 25px;
+}
+.logo {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+#header-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+#header-options > * {
+    color: white;
+    text-decoration: none;
+}
+#header-options > *:hover {
+    background-color: #323232;
+}
+.search-input {
+    width: 60%;
+    border-radius: 10px;
+    text-indent: 10px;
+}
+/* -------------------- BODY -------------------- */
+/* .top-banner {
+
+    visibility: hidden;
+    height: 425px;
+} */
+.top-banner-wrapper {
+    width: 100%;
+    height: 0;
+    padding-top: 27.76%; /* height:width ratio */
+    border: 2px solid white;
+    background-image: url("/images/top-banner-1.webp");
+    background-size: contain;
+    background-repeat: no-repeat;
+    align-items: center;
+}
+#categories {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    
+}
+
+.top-card {
+    width: 200px;
+    height: 250px;
+    margin: 10px;
+    background-color: #323232;
+    border-radius: 20px;
+}
+
+.top-card:hover {
+    box-shadow: 2px 2px 2px 0 gray;
+    cursor: pointer;
+}
+
+.top-card-img {
+    width: 9rem;
+    height: 9rem;
+    margin-bottom: 20px;
+}
+.bottom-card {
+    width: 280px;
+    height: 425px;
+    margin: 10px;
+    background-color: #323232;
+    color: white;
+    border-radius: 20px;
+}
+.bottom-card:hover {
+    box-shadow: 2px 2px 2px 0 #010101;
+}
+.bottom-card-img {
+    width: 15rem;
+    height: 15rem;
+    margin-bottom: 20px;
+}
+.category-title {
+    font-size: 30px;
+    text-align: center;
+    color: #fff;
+}
+
+/* Footer */
+.text-reset {
+    text-decoration: none;
+}
