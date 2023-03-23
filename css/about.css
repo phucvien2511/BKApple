@@ -16,6 +16,9 @@ body {
 svg {
     fill: white;
 }
+a {
+    text-decoration: none;
+}
 /* -------------------- HEADER --------------------  */
 .header {
     height: 15%;

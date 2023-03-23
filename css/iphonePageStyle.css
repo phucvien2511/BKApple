@@ -5,13 +5,12 @@
 }
 /* -------------------- HEADER --------------------  */
 .header {
-    height: 15%;
+    height: 20%;
     background-color: black;
     align-items: center;
     justify-content: space-between;
 }
 .title {
-    color: white;
     font-size: 25px;
 }
 .logo {
@@ -19,27 +18,25 @@
     height: 30px;
     margin-bottom: 5px;
 }
-
 #header-options {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
 }
-
-.nav-link:hover {
-    background-color: #2c2c2c;
-    color: white;
-}
-.nav-link.active {
-    background-color: #2c2c2c;
-    color: white;
-}
-.nav-link {
+#header-options > * {
     color: white;
     text-decoration: none;
 }
-.searchbar > input {
-    width: 75%;
+#header-options > *:hover {
+    background-color: #323232;
+}
+.nav-links:active {
+    background-color: #323232;
+}
+.search-input {
+    width: 60%;
+    border-radius: 10px;
+    text-indent: 10px;
 }
 /* -- Search bar & Shop -- */
 .input-searchbar {
@@ -139,6 +136,10 @@ body {
     margin: 10px;
     background-color: #323232;
     border-radius: 30px;
+}
+.top-card:hover {
+    box-shadow: 2px 2px 2px 0 gray;
+    cursor: pointer;
 }
 .cardMemory {
     border: 1px solid #1c1c1d;
