@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;1,400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    background-color: #3e3e3e;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+}
+
+.white {
+    color: white;
+}
+
+/* -------------------- HEADER --------------------  */
+.header {
+    height: 20%;
+    background-color: black;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 25px;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+
+#header-options {
+    height: 100%;
+}
+
+#header-options>* {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+#header-options>*:hover {
+    background-color: #323232;
+}
+
+.search-input {
+    width: 60%;
+    border-radius: 10px;
+    text-indent: 10px;
+}
+
+.navbar-toggler-icon {
+    background-color: lightgray !important;
+}
+
+/* -----BODY----- */
+#middle {
+    margin: 0 auto;
+}
+
+#current-img {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.big-img {
+    width: 325px;
+    height: 325px;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.small-img-set {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.small-img {
+    width: 90px;
+    height: 90px;
+    margin: 5px;
+    border: 1px solid lightgray;
+    border-radius: 10%;
+}
+
+.summary {
+    padding-bottom: 20px;
+}
+
+.product-desc {
+    margin-top: 10px;
+}
+
+.memory-card {
+    width: 100px;
+    height: 40px;
+    background-color: #323232;
+    border: 1px solid gray;
+    border-radius: 10px;
+    color: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}
+
+.choose-color a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 5px;
+    border: 1px solid lightgray;
+}
+
+.color-card-black {
+    background-color: black;
+}
+
+.color-card-white {
+    background-color: white;
+}
+
+.color-card-red {
+    background-color: red;
+}
+
+.color-card-blue {
+    background-color: blue;
+}
+
+.color-card-green {
+    background-color: green;
+}
+
+.color-card-yellow {
+    background-color: yellow;
+}
+
+.color-card-silver {
+    background-color: silver;
+}
+
+[class^="color-card-"]:active {
+    border: 2px solid lightgray;
+}
