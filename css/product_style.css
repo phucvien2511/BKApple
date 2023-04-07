@@ -14,6 +14,7 @@ body {
 
 a {
     text-decoration: none;
+    cursor: pointer;
 }
 
 .white {
@@ -76,8 +77,8 @@ a {
 }
 
 .big-img {
-    width: 325px;
-    height: 325px;
+    width: 400px;
+    height: 400px;
     display: flex;
     margin-bottom: 10px;
 }
@@ -122,38 +123,69 @@ a {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    margin: 5px;
+    margin: 10px 20px;
     border: 1px solid lightgray;
 }
 
-.color-card-black {
-    background-color: black;
-}
-
-.color-card-white {
-    background-color: white;
-}
-
-.color-card-red {
-    background-color: red;
-}
-
-.color-card-blue {
-    background-color: blue;
-}
-
-.color-card-green {
-    background-color: green;
-}
-
-.color-card-yellow {
-    background-color: yellow;
-}
-
-.color-card-silver {
-    background-color: silver;
-}
 
 [class^="color-card-"]:active {
-    border: 2px solid lightgray;
+    border: 5px solid lightgray;
 }
+
+[class^="color-card-"]:hover {
+    border: 5px solid lightgray;
+}
+
+/* Slider */
+.carousel {
+    width: 450px;
+    height: 400px;
+}
+
+.carousel-indicators button {
+    background-color: gray !important;
+}
+
+.carousel-indicators button.active {
+    background-color: black !important;
+}
+
+.carousel-control-prev {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.carousel-control-next {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
+.carousel-control-next-icon {
+    height: 50px;
+    width: 50px;
+    outline: black;
+    background-size: 30px, 30px;
+    background-image: url('/images/right.png');
+    margin-left: 50px;
+}
+
+.carousel-control-prev-icon {
+    height: 50px;
+    width: 50px;
+    outline: black;
+    background-size: 30px, 30px;
+    background-image: url('/images/left.png');
+    margin-right: 50px;
+}
+
+
+.carousel-item img {
+    border-radius: 20px;
+    height: 400px;
+}
+
+/* End of Slider */

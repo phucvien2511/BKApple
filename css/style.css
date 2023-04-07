@@ -14,6 +14,7 @@ body {
 
 a {
     text-decoration: none;
+    cursor: pointer;
 }
 
 .white {
@@ -138,3 +139,62 @@ a {
 .text-reset {
     text-decoration: none;
 }
+
+/* Slider */
+.carousel {
+    width: 75%;
+    height: 450px;
+}
+
+.carousel-indicators button {
+    background-color: gray !important;
+}
+
+.carousel-indicators button.active {
+    background-color: black !important;
+}
+
+.carousel-control-prev {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.carousel-control-next {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
+.carousel-control-next-icon {
+    height: 35px;
+    width: 35px;
+    outline: black;
+    background-size: 90%, 90%;
+    background-image: url('/images/right.png');
+}
+
+.carousel-control-prev-icon {
+    height: 35px;
+    width: 35px;
+    outline: black;
+    background-size: 90%, 90%;
+    background-image: url('/images/left.png');
+}
+
+.carousel-control-next-icon:after {
+    color: red;
+}
+
+.carousel-control-prev-icon:after {
+    color: red;
+}
+
+.carousel-item img {
+    border-radius: 20px;
+    height: 450px !important;
+
+}
+
+/* End of Slider */

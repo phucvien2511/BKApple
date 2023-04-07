@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mac Page</title>
+    <title>Mac - BKApple</title>
     <link rel="stylesheet" href="/css/skdslider.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/mac_style.css">
@@ -29,6 +29,7 @@
                                 <a class="nav-link white" href="/php/iphone.php">iPhone</a>
                                 <a class="nav-link white" href="/php/ipad.php">iPad</a>
                                 <a class="nav-link white" href="/php/mac.php">Mac</a>
+                                <a class="nav-link white" href="/php/watch.php">Watch</a>
                                 <a class="nav-link white" href="/php/sound.php">Âm thanh</a>
                                 <a class="nav-link white" href="/php/accessory.php">Phụ kiện</a>
                                 <a class="nav-link white" href="/php/warranty.php">Bảo hành</a>
@@ -57,21 +58,27 @@
         <!-- End of Category Logo -->
 
         <!-- Slider -->
-        <div class="slider">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 p-0">
-                        <div id="slider__img">
-                            <div class="slide">
-                                <img src="/images/iphone/banner_one.png" alt="">
-                            </div>
-                            <div class="slide">
-                                <img src="/images/iphone/banner_two.png" alt="">
-                            </div>
-                        </div>
-                    </div>
+        <div id="carouselExampleIndicators" class="carousel slide mx-auto" data-bs-ride="true">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/images/mac/banner1.png" class="d-block w-100" alt="Banner 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="/images/mac/banner2.png" class="d-block w-100" alt="Banner 2">
                 </div>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
         <!-- End of Slider -->
 
@@ -84,11 +91,11 @@
                     </button>
                     <div class="collapse navbar-collapse" id="openMacList">
                         <div class="navbar-nav">
-                            <a class="nav-link active white" href="#">Tất cả</a>
-                            <a class="nav-link white" href="#">MacBook Pro</a>
-                            <a class="nav-link white" href="#">MacBook Air</a>
-                            <a class="nav-link white" href="#">iMac</a>
-                            <a class="nav-link white" href="#">Mac Mini</a>
+                            <a class="nav-link white" href="/php/mac.php">Tất cả</a>
+                            <a class="nav-link white" href="/php/mac.php?classify=pro">MacBook Pro</a>
+                            <a class="nav-link white" href="/php/mac.php?classify=air">MacBook Air</a>
+                            <a class="nav-link white" href="/php/mac.php?classify=imac">iMac</a>
+                            <a class="nav-link white" href="/php/mac.php?classify=mini">Mac Mini</a>
                         </div>
                     </div>
                 </div>
@@ -98,9 +105,27 @@
                     Sắp xếp
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Giá từ cao đến thấp</a></li>
-                    <li><a class="dropdown-item" href="#">Giá từ thấp đến cao</a></li>
-                    <li><a class="dropdown-item" href="#">Ngày ra mắt</a></li>
+                    <?php
+                    function sort_url($direction)
+                    {
+                        // Get the current query string
+                        $current_query_string = $_SERVER['QUERY_STRING'];
+                        //Replace the sort param if it existed
+                        if (strpos($current_query_string, 'sort=') === false) {
+                            $new_query_string = $current_query_string . '&sort=' . $direction;
+                        } else {
+                            $new_query_string = preg_replace('/sort=[a-z]+/', 'sort=' . $direction, $current_query_string);
+                        }
+                        // Build the new URL
+                        $new_url = '?' . $new_query_string;
+                        // Return the new URL
+                        return $new_url;
+                    }
+                    ?>
+                    <li><a class="dropdown-item" href="<?php echo sort_url('asc') ?>">Giá từ thấp đến cao</a></li>
+                    <li><a class="dropdown-item" href="<?php echo sort_url('dsc') ?> ">Giá từ cao đến thấp</a></li>
+                    <li><a class="dropdown-item" href="<?php echo sort_url('date') ?>">Mới ra mắt</a></li>
+                    <li><a class="dropdown-item" href="<?php echo sort_url('fav') ?>">Bán chạy</a></li>
                 </ul>
             </div>
         </div>
@@ -117,39 +142,65 @@
             $db = "applestore";
             //Connect to database
             $db_connect = mysqli_connect($servername, $username, $password, $db);
+
+            $img_classify = null;
             //Check connection
             if (!$db_connect) {
                 die("Connection failed: " . mysqli_connect_error());
             }
-            $name_query = "SELECT product.*, mac.classify, GROUP_CONCAT(mac.capacity ORDER BY mac.capacity SEPARATOR ',') AS capacities FROM product JOIN mac ON product.id = mac.id GROUP BY mac.classify";
-            $result = mysqli_query($db_connect, $name_query);
-            $showed_image = false;
+            if (isset($_GET['classify'])) {
+                $classify = $_GET['classify'];
+                $name_query = "SELECT product.*, mac.capacity, mac.classify, mac.classify as img_classify FROM product JOIN mac ON product.id = mac.id WHERE SUBSTRING_INDEX(mac.classify, ' ', 1) = '$classify' GROUP BY mac.id";
+            } else {
+                $name_query = "SELECT product.*, mac.capacity, mac.classify, mac.classify as img_classify FROM product JOIN mac ON product.id = mac.id GROUP BY mac.id";
+            }
+            if (isset($_GET['sort'])) {
+                $sort_option = $_GET['sort'];
+                if ($sort_option == 'asc') {
+                    //Sort $result by price ascending
+                    $result = mysqli_query($db_connect, $name_query . " ORDER BY price ASC");
+                } else if ($sort_option == 'dsc') {
+                    //Sort $result by price descending
+                    $result = mysqli_query($db_connect, $name_query . " ORDER BY price DESC");
+                } else if ($sort_option == 'date') {
+                    //Sort $result by date descending
+                    $result = mysqli_query($db_connect, $name_query . " ORDER BY releaseDate DESC");
+                } else if ($sort_option == 'fav') {
+                    //Sort $result by favorite descending
+                    $result = mysqli_query($db_connect, $name_query . " ORDER BY sold DESC");
+                }
+            } else {
+                $result = mysqli_query($db_connect, $name_query);
+            }
+            $num_rows = mysqli_num_rows($result);
+            if ($num_rows <= 0) {
+                echo '<h1 class="white text-center mb-5 mt-5">Không tìm thấy sản phẩm nào</h1>';
+            }
             while ($rows = mysqli_fetch_assoc($result)) {
-                $price = $rows['price'];
-                $formatted_price = number_format($price, 0, '.', '.') . 'đ';
-                $capacities = explode(',', $rows['capacities']);
-                $thumbnail = $rows['thumbnail'];
-                $productName = $rows['productName'];
-                $colors = explode(',', $rows['color']);
-                $classify = str_replace(' ', '', $rows['classify']);
-                $img_src = $thumbnail . '_' . $classify . '.png';
-                echo
-                '<a href="#" class="d-flex flex-column align-items-center justify-content-center bottom-card">
-                <img src="' . $img_src . '" alt="' . $productName . '" class="bottom-card-img">
+                if ($num_rows > 0) {
+                    $price = $rows['price'];
+                    $formatted_price = number_format($price, 0, '.', '.') . 'đ';
+                    $thumbnail = $rows['thumbnail'];
+                    $productName = $rows['productName'];
+                    $colors = explode(',', $rows['color']);
+                    $price = $rows['price'];
+                    $img_src = $thumbnail . '_' . $colors[0] . '.png';
+                    echo
+                    '<a href="/php/product.php?product=' . $rows['id'] . '" class="d-flex flex-column align-items-center justify-content-center bottom-card">
+                    <img src="' . $img_src . '" alt="' . $productName . '" class="bottom-card-img">
                     <div class="row">';
-                foreach ($capacities as $capacity) {
                     echo
                     '<div class="col memory-card">
-                        <div class="memory">' . $capacity . '</div>
-                    </div>';
+                            <div class="memory">' . $rows['capacity'] . '</div>
+                        </div>';
+                    echo
+                    '</div>
+                        <div class="d-flex flex-column align-items-center mt-2">
+                            <h6 class="white text-center" class="mt-4 mb-4">' . $productName . '</h6>
+                            <h5 class="white text-center">' . $formatted_price . '</h5>
+                        </div>
+                    </a>';
                 }
-                echo
-                '</div>
-                    <div class="d-flex flex-column align-items-center mt-2">
-                        <h6 class="white text-center" class="mt-4 mb-4">' . $productName . '</h6>
-                        <h5 class="white text-center">' . $formatted_price . '</h5>
-                    </div>
-                </a>';
             }
 
             mysqli_free_result($result);
@@ -255,34 +306,7 @@
         </div>
     </div>
     <script src="/js/bootstrap.bundle.min.js"></script>
-
-    <!--Script for Slider-->
     <script src="/js/jquery-3.6.1.min.js"></script>
-    <script src="/js/skdslider.min.js"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function() {
-            jQuery('#slider__img').skdslider({
-                slideSelector: '.slide',
-                delay: 5000,
-                animationSpeed: 2000,
-                showNextPrev: true,
-                showPlayButton: false,
-                autoSlide: false,
-                animationType: 'sliding'
-            });
-
-            jQuery('#demo2').skdslider({
-                slideSelector: '.slide',
-                delay: 5000,
-                animationSpeed: 1000,
-                showNextPrev: true,
-                showPlayButton: false,
-                autoSlide: true,
-                animationType: 'sliding'
-            });
-        });
-    </script>
-    <!--Script for Slider-->
 </body>
 
 </html>
