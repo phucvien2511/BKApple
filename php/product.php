@@ -60,23 +60,18 @@
         if (isset($_GET['product'])) {
             $id = $_GET['product'];
             //Find which table does that product id belong to
-            $name_query = "SELECT COUNT(*) as cnt, 'iphone' as table_name, product.* FROM iphone JOIN product ON iphone.id = product.id WHERE product.id = '$id'
-                          UNION ALL 
-                          SELECT COUNT(*) as cnt, 'ipad' as table_name, product.* FROM ipad JOIN product ON ipad.id = product.id WHERE product.id = '$id'
-                          UNION ALL 
-                          SELECT COUNT(*) as cnt, 'mac' as table_name, product.* FROM mac JOIN product ON mac.id = product.id WHERE product.id = '$id'
-                          UNION ALL 
-                          SELECT COUNT(*) as cnt, 'watch' as table_name, product.* FROM watch JOIN product ON watch.id = product.id WHERE product.id = '$id'
-                          UNION ALL 
-                          SELECT COUNT(*) as cnt, 'sound' as table_name, product.* FROM sound JOIN product ON sound.id = product.id WHERE product.id = '$id'
-                          UNION ALL 
-                          SELECT COUNT(*) as cnt, 'accessory' as table_name, product.* FROM accessory JOIN product ON accessory.id = product.id WHERE product.id = '$id'";
-            $result = mysqli_query($db_connect, $name_query);
-            while ($rows = mysqli_fetch_assoc($result)) {
-                if ($rows['cnt'] > 0) {
-                    $table_result = $rows['table_name'];
-                    break;
-                }
+            if (substr($id, 0, 6) == 'IPHONE') {
+                $table_result = 'iphone';
+            } else if (substr($id, 0, 3) == 'MAC') {
+                $table_result = 'mac';
+            } else if (substr($id, 0, 4) == 'IPAD') {
+                $table_result = 'ipad';
+            } else if (substr($id, 0, 5) == 'WATCH') {
+                $table_result = 'watch';
+            } else if (substr($id, 0, 5) == 'SOUND') {
+                $table_result = 'sound';
+            } else if (substr($id, 0, 9) == 'ACCESSORY') {
+                $table_result = 'accessory';
             }
         }
         $name_query = "SELECT * FROM product JOIN $table_result ON product.id = $table_result.id WHERE product.id = '$id'";
