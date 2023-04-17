@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iPhone - BKApple</title>
-    <link rel="stylesheet" href="/css/skdslider.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/iphone_style.css">
 </head>
@@ -13,19 +13,19 @@
 <body>
     <div class="container-fluid">
         <!-- Header -->
-        <div class="row header sticky-top">
-            <a class="col-2 text-center title text-decoration-none" href="/index.php">
+        <div class="header sticky-top d-flex flex-row justify-content-between">
+            <a class="col-sm-4 col-lg-2 title text-decoration-none" href="/index.php">
                 <img src="/images/apple.png" alt="Apple logo" class="logo">
                 BKApple
             </a>
-            <div class="col-10 text-center">
-                <nav class="navbar navbar-expand-lg" style="background-color: black;">
-                    <div class="container-fluid">
+            <div class="col-sm-6 col-lg-9 mx-auto text-end mr-2">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container">
                         <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                            <div class="navbar-nav col-8" id="header-options">
+                        <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+                            <div class="navbar-nav" id="header-options">
                                 <a class="nav-link white" href="/php/iphone.php">iPhone</a>
                                 <a class="nav-link white" href="/php/ipad.php">iPad</a>
                                 <a class="nav-link white" href="/php/mac.php">Mac</a>
@@ -35,15 +35,22 @@
                                 <a class="nav-link white" href="/php/warranty.php">Bảo hành</a>
                                 <a class="nav-link white" href="/php/about.php">Về chúng tôi</a>
                             </div>
-                            <form class="d-flex flex-row justify-content-center ml-auto" role="search">
-                                <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search">
-                                <button class=" btn btn-outline-light" type="submit">Tìm</button>
+
+                            <form class="d-flex flex-row ml-auto justify-content-end">
+                                <input id="search" class="form-control me-2" type="text" placeholder="Tìm kiếm" aria-label="Search">
+                                <button class="btn btn-outline-light" type="submit">Tìm</button>
                             </form>
                         </div>
                     </div>
-
                 </nav>
-
+            </div>
+            <div class="col-sm-1 d-flex flex-row align-items-center justify-content-end user-icons">
+                <a href="/html/cart.html" class="white">
+                    <i class="fa-solid fa-cart-shopping fa-xl"></i>
+                </a>
+                <a href="/php/login.php" class="white">
+                    <i class="fa-solid fa-circle-user fa-xl"></i>
+                </a>
             </div>
         </div>
         <!-- End of Header -->
@@ -304,7 +311,7 @@
                 <!-- Copyright -->
                 <div class="text-center p-4" style="background-color: rgba(34,34,34,255);">
                     © 2023 Copyright:
-                    <a class="text-reset fw-bold" href="https://github.com/phucvien2511/Web-Assignment-222.git">Github</a>
+                    <a class="text-reset fw-bold" href="https://github.com/phucvien2511/BKApple">Github</a>
                 </div>
                 <!-- Copyright -->
             </footer>

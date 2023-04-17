@@ -14,13 +14,16 @@ USE `AppleStore`;
 -- Table structure for table `Admin`
 --
 CREATE TABLE admin (
-  id VARCHAR(5) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL UNIQUE,
+  id VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL UNIQUE,
+  password CHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   name VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  birthday DATE DEFAULT CURRENT_TIMESTAMP, 
   idNumber CHAR(12) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL UNIQUE,
   address text,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
+INSERT INTO `admin` (`id`, `password`, `name`, `birthday`, `idNumber`, `address`) VALUES
+('!admin001', '123456', 'Lorem Ipsum', '2002-11-25', '0123456789123', '528 Nguyen Hue, Go Vap Dist, HCMC');
 --
 -- Table structure for table `customer`
 --
@@ -29,9 +32,9 @@ CREATE TABLE customer (
   username CHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL UNIQUE,
   password CHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   name VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  birthDay DATE DEFAULT CURRENT_TIMESTAMP, 
+  birthday DATE DEFAULT CURRENT_TIMESTAMP, 
   phone CHAR(12) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  gmail VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  mail VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   address text,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -82,22 +85,22 @@ INSERT INTO `product` (`id`, `productName`, `releaseDate`, `quantity`, `sold`, `
 ('MACAIRM1', 'MacBook Air M1', '2022-01-01', 70, 0, 25790000, "MacBook Air M1's description", 'silver,grey,yellow', '/images/mac/mac_airm1'),
 ('IMAC', 'iMac M1 24 inch', '2021-07-08', 150, 25, 37390000, "iMac's description", 'blue,pink,green', '/images/mac/imac24_m1'),
 -- iPad
-('IPADAIR5', 'iPad Air 5 WiFi 256GB', '2019-03-03', 120, 20, 20990000, "Ipad Air 5 WiFi's description", 'gray,blue,gold', '/images/ipad/air/air5'),
-('IPADAIR5_C', 'iPad Air 5 WiFi + Cellular 256GB', '2019-06-05', 200, 35, 24990000, "Ipad Air 5 WiFi + Cellular's description", 'blue,gray', '/images/ipad/air/air5_cellular'),
-('IPADMINI6', 'iPad Mini 6 WiFi 256GB', '2019-01-01', 180, 1, 19990000, "Ipad Mini's description", 'gold,grey,purple', '/images/ipad/mini/mini6'),
-('IPADMINI6_C', 'iPad Mini 6 WiFi + Cellular 256GB', '2019-02-02', 140, 12, 23990000, "Ipad Mini's description", 'pink,purple,silver', '/images/ipad/mini/mini6_cellular'),
-('IPADPROM1_11', 'iPad Pro M1 11 inch WiFi 256GB', '2021-05-05', 250, 45, 25990000, "Ipad Pro M1's description", 'silver', '/images/ipad/prom1/prom1_11'),
-('IPADPROM1_11_C', 'iPad Pro M1 11 inch WiFi + Cellular 256GB', '2021-05-06', 200, 11, 29990000, "Ipad Pro M1's description", 'silver', '/images/ipad/prom1/prom1_11_cellular'),
-('IPADPROM1_12.9', 'iPad Pro M1 12.9 inch WiFi 256GB', '2021-05-07', 150, 0, 29990000, "Ipad Pro M1's description", 'silver', '/images/ipad/prom1/prom1_12.9'),
-('IPADPROM1_12.9_C', 'iPad Pro M1 12.9 inch WiFi + Cellular 256GB', '2021-05-08', 100, 3, 33990000, "Ipad Pro M1's description", 'silver,grey', '/images/ipad/prom1/prom1_12.9_cellular'),
-('IPADPROM2_11', 'iPad Pro M2 11 inch WiFi 256GB', '2022-05-05', 250, 44, 28990000, "Ipad Pro M2's description", 'silver,grey', '/images/ipad/prom2/prom2_11'),
-('IPADPROM2_12.9', 'iPad Pro M2 12.9 inch WiFi 256GB', '2022-05-07', 150, 2, 34990000, "Ipad Pro M2's description", 'silver,grey', '/images/ipad/prom2/prom2_12.9'),
-('IPADPROM2_12.9_C', 'iPad Pro M2 12.9 inch WiFi + Cellular 256GB', '2022-05-08', 100, 1, 38990000, "Ipad Pro M2's description", 'silver,grey', '/images/ipad/prom2/prom2_12.9_cellular'),
+('IPADAIR5', 'iPad Air 5 WiFi 256GB', '2019-03-03', 120, 20, 20990000, "Với màn hình Liquid Retina 10.9 inch sống động. Chip Apple M1 đột phá cho hiệu năng nhanh hơn, giúp iPad trở nên siêu mạnh mẽ để sáng tạo và chơi game di động. Sở hữu Touch ID, camera tiên tiến, 5G và Wi-Fi 6 nhanh như chớp, cổng USB-C, cùng khả năng hỗ trợ Magic Keyboard và Apple Pencil (thế hệ thứ 2).", 'gray,blue,gold', '/images/ipad/air/air5'),
+('IPADAIR5_C', 'iPad Air 5 WiFi + Cellular 256GB', '2019-06-05', 200, 35, 24990000, "Với màn hình Liquid Retina 10.9 inch sống động. Chip Apple M1 đột phá cho hiệu năng nhanh hơn, giúp iPad trở nên siêu mạnh mẽ để sáng tạo và chơi game di động. Sở hữu Touch ID, camera tiên tiến, 5G và Wi-Fi 6 nhanh như chớp, cổng USB-C, cùng khả năng hỗ trợ Magic Keyboard và Apple Pencil (thế hệ thứ 2).", 'blue,gray', '/images/ipad/air/air5_cellular'),
+('IPADMINI6', 'iPad Mini 6 WiFi 256GB', '2019-01-01', 180, 1, 19990000, "Thiết kế màn hình toàn phần với màn hình Liquid Retina 8.3 inch. Chip A15 Bionic mạnh mẽ với Neural Engine. Camera trước Ultra Wide 12MP với tính năng Trung Tâm Màn Hình. Cổng kết nối USB-C. Mạng 5G siêu nhanh. Ghi chú, đánh dấu tài liệu hoặc phác thảo ngay khi những ý tưởng lớn xuất hiện trong đầu với Apple Pencil (thế hệ thứ 2) có khả năng gắn kết bằng nam châm và sạc không dây.", 'gold,grey,purple', '/images/ipad/mini/mini6'),
+('IPADMINI6_C', 'iPad Mini 6 WiFi + Cellular 256GB', '2019-02-02', 140, 12, 23990000, "Thiết kế màn hình toàn phần với màn hình Liquid Retina 8.3 inch. Chip A15 Bionic mạnh mẽ với Neural Engine. Camera trước Ultra Wide 12MP với tính năng Trung Tâm Màn Hình. Cổng kết nối USB-C. Mạng 5G siêu nhanh. Ghi chú, đánh dấu tài liệu hoặc phác thảo ngay khi những ý tưởng lớn xuất hiện trong đầu với Apple Pencil (thế hệ thứ 2) có khả năng gắn kết bằng nam châm và sạc không dây.", 'pink,purple,silver', '/images/ipad/mini/mini6_cellular'),
+('IPADPROM1_11', 'iPad Pro M1 11 inch WiFi 256GB', '2021-05-05', 250, 45, 25990000, "Với hiệu năng ấn tượng, kết nối không dây siêu nhanh và trải nghiệm Apple Pencil thế hệ mới. Cùng với các tính năng mới mạnh mẽ cho hiệu suất công việc và cộng tác ở iPadOS 16. iPad Pro đem đến trải nghiệm iPad cực đỉnh.", 'silver', '/images/ipad/prom1/prom1_11'),
+('IPADPROM1_11_C', 'iPad Pro M1 11 inch WiFi + Cellular 256GB', '2021-05-06', 200, 11, 29990000, "Với hiệu năng ấn tượng, kết nối không dây siêu nhanh và trải nghiệm Apple Pencil thế hệ mới. Cùng với các tính năng mới mạnh mẽ cho hiệu suất công việc và cộng tác ở iPadOS 16. iPad Pro đem đến trải nghiệm iPad cực đỉnh.", 'silver', '/images/ipad/prom1/prom1_11_cellular'),
+('IPADPROM1_12.9', 'iPad Pro M1 12.9 inch WiFi 256GB', '2021-05-07', 150, 0, 29990000, "Với hiệu năng ấn tượng, kết nối không dây siêu nhanh và trải nghiệm Apple Pencil thế hệ mới. Cùng với các tính năng mới mạnh mẽ cho hiệu suất công việc và cộng tác ở iPadOS 16. iPad Pro đem đến trải nghiệm iPad cực đỉnh.", 'silver', '/images/ipad/prom1/prom1_12.9'),
+('IPADPROM1_12.9_C', 'iPad Pro M1 12.9 inch WiFi + Cellular 256GB', '2021-05-08', 100, 3, 33990000, "Với hiệu năng ấn tượng, kết nối không dây siêu nhanh và trải nghiệm Apple Pencil thế hệ mới. Cùng với các tính năng mới mạnh mẽ cho hiệu suất công việc và cộng tác ở iPadOS 16. iPad Pro đem đến trải nghiệm iPad cực đỉnh.", 'silver,grey', '/images/ipad/prom1/prom1_12.9_cellular'),
+('IPADPROM2_11', 'iPad Pro M2 11 inch WiFi 256GB', '2022-05-05', 250, 44, 28990000, "Với hiệu năng ấn tượng, kết nối không dây siêu nhanh và trải nghiệm Apple Pencil thế hệ mới. Cùng với các tính năng mới mạnh mẽ cho hiệu suất công việc và cộng tác ở iPadOS 16. iPad Pro đem đến trải nghiệm iPad cực đỉnh.", 'silver,grey', '/images/ipad/prom2/prom2_11'),
+('IPADPROM2_12.9', 'iPad Pro M2 12.9 inch WiFi 256GB', '2022-05-07', 150, 2, 34990000, "Với hiệu năng ấn tượng, kết nối không dây siêu nhanh và trải nghiệm Apple Pencil thế hệ mới. Cùng với các tính năng mới mạnh mẽ cho hiệu suất công việc và cộng tác ở iPadOS 16. iPad Pro đem đến trải nghiệm iPad cực đỉnh.", 'silver,grey', '/images/ipad/prom2/prom2_12.9'),
+('IPADPROM2_12.9_C', 'iPad Pro M2 12.9 inch WiFi + Cellular 256GB', '2022-05-08', 100, 1, 38990000, "Với hiệu năng ấn tượng, kết nối không dây siêu nhanh và trải nghiệm Apple Pencil thế hệ mới. Cùng với các tính năng mới mạnh mẽ cho hiệu suất công việc và cộng tác ở iPadOS 16. iPad Pro đem đến trải nghiệm iPad cực đỉnh.", 'silver,grey', '/images/ipad/prom2/prom2_12.9_cellular'),
 -- Watch
-('WATCHSE_40MM', 'Apple Watch SE 40mm', '2022-07-06', 300, 10, 8990000, "Apple Watch SE 40mm's description", 'white,black,lightgrey', '/images/watch/watch_se_40mm'),
-('WATCHSE_44MM', 'Apple Watch SE 44mm', '2022-07-07', 250, 17, 9990000, "Apple Watch SE 44mm's description", 'white,black,lightgrey', '/images/watch/watch_se_44mm'),
-('WATCH_ULTRA_A', 'Apple Watch Ultra 49mm Alpine Loop', '2022-09-08', 350, 20, 23990000, "Apple Watch Ultra Alpine's description", 'black,orange,white', '/images/watch/watch_ultra_alpineloop'),
-('WATCH_ULTRA_O', 'Apple Watch Ultra 49mm Ocean Band', '2022-09-08', 350, 21, 23990000, "Apple Watch Ultra Ocean's description", 'black,orange,white', '/images/watch/watch_ultra_oceanband'),
+('WATCHSE_40MM', 'Apple Watch SE 40mm', '2022-07-06', 300, 10, 8990000, "Chiếc Apple Watch ngầu và giàu năng lực nhất từ trước đến nay, được thiết kế cho các hoạt động khám phá, phiêu lưu, và rèn luyện sức bền. Với vỏ titan hàng không chuyên dụng 49mm, thời lượng pin siêu dài, các ứng dụng chuyên biệt phối hợp với các cảm biến tối tân, và nút Tác Vụ tùy chỉnh mới.", 'white,black,lightgrey', '/images/watch/watch_se_40mm'),
+('WATCHSE_44MM', 'Apple Watch SE 44mm', '2022-07-07', 250, 17, 9990000, "Chiếc Apple Watch ngầu và giàu năng lực nhất từ trước đến nay, được thiết kế cho các hoạt động khám phá, phiêu lưu, và rèn luyện sức bền. Với vỏ titan hàng không chuyên dụng 49mm, thời lượng pin siêu dài, các ứng dụng chuyên biệt phối hợp với các cảm biến tối tân, và nút Tác Vụ tùy chỉnh mới.", 'white,black,lightgrey', '/images/watch/watch_se_44mm'),
+('WATCH_ULTRA_A', 'Apple Watch Ultra 49mm Alpine Loop', '2022-09-08', 350, 20, 23990000, "Chiếc Apple Watch ngầu và giàu năng lực nhất từ trước đến nay, được thiết kế cho các hoạt động khám phá, phiêu lưu, và rèn luyện sức bền. Với vỏ titan hàng không chuyên dụng 49mm, thời lượng pin siêu dài, các ứng dụng chuyên biệt phối hợp với các cảm biến tối tân, và nút Tác Vụ tùy chỉnh mới.", 'black,orange,white', '/images/watch/watch_ultra_alpineloop'),
+('WATCH_ULTRA_O', 'Apple Watch Ultra 49mm Ocean Band', '2022-09-08', 350, 21, 23990000, "Chiếc Apple Watch ngầu và giàu năng lực nhất từ trước đến nay, được thiết kế cho các hoạt động khám phá, phiêu lưu, và rèn luyện sức bền. Với vỏ titan hàng không chuyên dụng 49mm, thời lượng pin siêu dài, các ứng dụng chuyên biệt phối hợp với các cảm biến tối tân, và nút Tác Vụ tùy chỉnh mới.", 'black,white', '/images/watch/watch_ultra_oceanband'),
 
 -- Sound
 ('AIRPODPRO', 'AirPods Pro', '2020-01-01', 100, 10, 6990000, "AirPod Pro's description.", 'white', '/images/sound/airpod/airpod_pro'),
@@ -151,7 +154,7 @@ INSERT INTO `iPhone` (`id`, `classify`, `version`, `capacity`) VALUES
 ('IPHONE13_256', 'iphone13', '', '256GB'),
 ('IPHONE13_512', 'iphone13', '', '512GB'),
 ('IPHONE13PRO_512', 'iphone13', 'pro', '512GB'),
-('IPHONE13PRO_1024', 'iphone13', 'pro', '1024GB'),
+('IPHONE13PRO_1024', 'iphone13', 'pro', '1TB'),
 ('IPHONE13PROMAX_512', 'iphone13', 'pro-max', '512GB'),
 ('IPHONE12_64', 'iphone12', '', '64GB'),
 ('IPHONE12_128', 'iphone12', '', '128GB'),

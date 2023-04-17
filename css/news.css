@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;1,400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    background-color: #3e3e3e;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.white {
+    color: white;
+}
+
+/* -------------------- HEADER --------------------  */
+.header {
+    height: 20%;
+    background-color: black;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 25px;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+
+#header-options {
+    height: 100%;
+}
+
+#header-options>* {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+#header-options>*:hover {
+    background-color: #323232;
+}
+
+
+
+.navbar-toggler-icon {
+    background-color: lightgray !important;
+}
+
+.user-icons {
+    margin-left: 5px;
+}
+
+.user-icons a {
+    margin: 0 10px;
+}
+
+#search {
+    width: 200px;
+}
+
+
+/* -------------------- BODY -------------------- */
+.brand {
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.brand-img {
+    height: 35px;
+}
+
+.brand-name {
+    color: #d7d7d7;
+}
+
+.card {
+    height: 475px !important;
+    background-color: #323232 !important;
+    border-radius: 14px;
+}
+
+.card-title {
+    height: 70px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    overflow: visible;
+}
+
+.card-text {
+    height: 100px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.bg-image img {
+    width: 415px;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+}
+
+
+
+/*------------------------------------------Footer-------------------------------*/
+.footer {
+    display: block;
+    height: 10%;
+    background-color: black;
+    align-items: center;
+    justify-content: space-between;
+}

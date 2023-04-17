@@ -142,7 +142,7 @@ a {
 /* Slider */
 .carousel {
     width: 75%;
-    height: 300px;
+    height: 33%;
 }
 
 .carousel-indicators button {
@@ -183,17 +183,9 @@ a {
 
 }
 
-.carousel-control-next-icon:after {
-    color: red;
-}
-
-.carousel-control-prev-icon:after {
-    color: red;
-}
-
 .carousel-item img {
     border-radius: 20px;
-    height: 300px;
+    height: 33%;
 }
 
 /* End of Slider */

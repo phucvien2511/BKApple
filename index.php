@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ - BKApple</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -13,34 +14,44 @@
     <!-- Main page -->
     <div class="container-fluid">
         <!-- Header -->
-        <div class="row header sticky-top">
-            <a class="col-2 text-center title text-decoration-none" href="/index.php">
+        <div class="header sticky-top d-flex flex-row justify-content-between">
+            <a class="col-sm-4 col-lg-2 title text-decoration-none" href="/index.php">
                 <img src="/images/apple.png" alt="Apple logo" class="logo">
                 BKApple
             </a>
-            <div class="col-10 text-center">
-                <nav class="navbar navbar-expand-lg" style="background-color: black;">
-                    <div class="container-fluid">
+            <div class="col-sm-6 col-lg-9 mx-auto text-end mr-2">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container">
                         <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                            <div class="navbar-nav col-8" id="header-options">
+                        <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+                            <div class="navbar-nav" id="header-options">
                                 <a class="nav-link white" href="/php/iphone.php">iPhone</a>
                                 <a class="nav-link white" href="/php/ipad.php">iPad</a>
                                 <a class="nav-link white" href="/php/mac.php">Mac</a>
+                                <a class="nav-link white" href="/php/watch.php">Watch</a>
                                 <a class="nav-link white" href="/php/sound.php">Âm thanh</a>
                                 <a class="nav-link white" href="/php/accessory.php">Phụ kiện</a>
                                 <a class="nav-link white" href="/php/warranty.php">Bảo hành</a>
                                 <a class="nav-link white" href="/php/about.php">Về chúng tôi</a>
                             </div>
-                            <form class="d-flex flex-row justify-content-center ml-auto" role="search">
-                                <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search">
-                                <button class=" btn btn-outline-light" type="submit">Tìm</button>
+
+                            <form class="d-flex flex-row ml-auto justify-content-end">
+                                <input id="search" class="form-control me-2" type="text" placeholder="Tìm kiếm" aria-label="Search">
+                                <button class="btn btn-outline-light" type="submit">Tìm</button>
                             </form>
                         </div>
                     </div>
                 </nav>
+            </div>
+            <div class="col-sm-1 d-flex flex-row align-items-center justify-content-end user-icons">
+                <a href="/html/cart.html" class="white">
+                    <i class="fa-solid fa-cart-shopping fa-xl"></i>
+                </a>
+                <a href="/php/login.php" class="white">
+                    <i class="fa-solid fa-circle-user fa-xl"></i>
+                </a>
             </div>
         </div>
         <!-- End of Header -->
@@ -132,15 +143,11 @@
                         $thumbnail = $rows['thumbnail'];
                         $colors = explode(',', $rows['color']);
                         $version = str_replace(' ', '', $rows['version']);
-                        if ($version != '') {
-                            $img_src = $thumbnail . '_' . $version . '_' . $colors[0] . '.png';
-                        } else {
-                            $img_src = $thumbnail . '_' . $colors[0] . '.png';
-                        }
+                        $img_src = $thumbnail . '_' . $colors[0] . '.png';
                         echo
-                        '<a href="#"
+                        '<a href="/php/product.php?product=' . $rows['id'] . '"
                         class="d-flex flex-column align-items-center justify-content-center bottom-card col-sm-12 col-md-6 col-lg-3">
-                            <img src="' . $img_src . '" alt="iPhone 11" class="bottom-card-img">
+                            <img src="' . $img_src . '" alt="' . $rows['productName'] . '" class="bottom-card-img">
                             <div class="d-flex flex-column align-items-center">
                                 <h6 class="white text-center" class="mt-4 mb-4">' . $rows['productName'] . ' ' . $rows['capacity'] . '</h6>
                                 <h5 class="white text-center">' . $formatted_price . '</h5>
@@ -162,15 +169,11 @@
                         $thumbnail = $rows['thumbnail'];
                         $colors = explode(',', $rows['color']);
                         $classify = str_replace(' ', '', $rows['classify']);
-                        if ($classify != '') {
-                            $img_src = $thumbnail . '_' . $classify . '_' . $colors[0] . '.png';
-                        } else {
-                            $img_src = $thumbnail . '_' . $colors[0] . '.png';
-                        }
+                        $img_src = $thumbnail . '_' . $colors[0] . '.png';
                         echo
-                        '<a href="#"
+                        '<a href="/php/product.php?product=' . $rows['id'] . '"
                         class="d-flex flex-column align-items-center justify-content-center bottom-card col-sm-12 col-md-6 col-lg-3">
-                            <img src="' . $img_src . '" alt="iPhone 11" class="bottom-card-img">
+                            <img src="' . $img_src . '" alt="' . $rows['productName'] . '" class="bottom-card-img">
                             <div class="d-flex flex-column align-items-center">
                                 <h6 class="white text-center" class="mt-4 mb-4">' . $rows['productName'] . '</h6>
                                 <h5 class="white text-center">' . $formatted_price . '</h5>
@@ -184,7 +187,7 @@
                 <div class="row d-flex flex-row align-items-center justify-content-center">
                     <?php
                     //Get iphone products from database, but not duplicate if same classify and version
-                    $name_query = "SELECT * FROM product JOIN mac ON product.id = mac.id GROUP BY classify";
+                    $name_query = "SELECT * FROM product JOIN mac ON product.id = mac.id ORDER BY sold DESC LIMIT 4";
                     $result = mysqli_query($db_connect, $name_query);
                     while ($rows = mysqli_fetch_assoc($result)) {
                         $price = $rows['price'];
@@ -194,9 +197,9 @@
                         $classify = str_replace(' ', '', $rows['classify']);
                         $img_src = $thumbnail . '_' . $colors[0] . '.png';
                         echo
-                        '<a href="#"
+                        '<a href="/php/product.php?product=' . $rows['id'] . '"
                         class="d-flex flex-column align-items-center justify-content-center bottom-card col-sm-12 col-md-6 col-lg-3">
-                            <img src="' . $img_src . '" alt="iPhone 11" class="bottom-card-img">
+                            <img src="' . $img_src . '" alt="' . $rows['productName'] . '" class="bottom-card-img">
                             <div class="d-flex flex-column align-items-center">
                                 <h6 class="white text-center" class="mt-4 mb-4">' . $rows['productName'] . '</h6>
                                 <h5 class="white text-center">' . $formatted_price . '</h5>
@@ -219,9 +222,9 @@
                         $classify = str_replace(' ', '', $rows['classify']);
                         $img_src = $thumbnail . '.png';
                         echo
-                        '<a href="#"
+                        '<a href="/php/product.php?product=' . $rows['id'] . '"
                             class="d-flex flex-column align-items-center justify-content-center bottom-card col-sm-12 col-md-6 col-lg-3">
-                                <img src="' . $img_src . '" alt="iPhone 11" class="bottom-card-img">
+                                <img src="' . $img_src . '" alt="' . $rows['productName'] . '" class="bottom-card-img">
                                 <div class="d-flex flex-column align-items-center">
                                     <h6 class="white text-center" class="mt-4 mb-4">' . $rows['productName'] . '</h6>
                                     <h5 class="white text-center">' . $formatted_price . '</h5>
@@ -247,9 +250,9 @@
                             $img_src = $thumbnail . '_' . $colors[0] . '.png';
                         }
                         echo
-                        '<a href="#"
+                        '<a href="/php/product.php?product=' . $rows['id'] . '"
                         class="d-flex flex-column align-items-center justify-content-center bottom-card col-sm-12 col-md-6 col-lg-3">
-                            <img src="' . $img_src . '" alt="iPhone 11" class="bottom-card-img">
+                            <img src="' . $img_src . '" alt="' . $rows['productName'] . '" class="bottom-card-img">
                             <div class="d-flex flex-column align-items-center">
                                 <h6 class="white text-center" class="mt-4 mb-4">' . $rows['productName'] . '</h6>
                                 <h5 class="white text-center">' . $formatted_price . '</h5>
@@ -350,7 +353,7 @@
                 <!-- Copyright -->
                 <div class="text-center p-4" style="background-color: rgba(34,34,34,255);">
                     © 2023 Copyright:
-                    <a class="text-reset fw-bold" href="https://github.com/phucvien2511/Web-Assignment-222.git">Github</a>
+                    <a class="text-reset fw-bold" href="https://github.com/phucvien2511/BKApple">Github</a>
                 </div>
                 <!-- Copyright -->
             </footer>
