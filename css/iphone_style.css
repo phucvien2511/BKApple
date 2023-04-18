@@ -62,72 +62,13 @@ a {
     background-color: lightgray !important;
 }
 
-.user-icons {
-    margin-left: 5px;
-}
-
-.user-icons a {
-    margin: 0 10px;
-}
-
-#search {
-    width: 200px;
-}
-
-/* Slider */
+/* -- Slider -- */
 .slider {
     width: 70%;
     margin: auto;
 }
 
-.carousel {
-    width: 75%;
-    height: 33%;
-}
-
-.carousel-indicators button {
-    background-color: gray !important;
-}
-
-.carousel-indicators button.active {
-    background-color: black !important;
-}
-
-.carousel-control-prev {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.carousel-control-next {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.carousel-control-next-icon {
-    height: 35px;
-    width: 35px;
-    outline: black;
-    background-size: 90%, 90%;
-    background-image: url('/images/right.png');
-}
-
-.carousel-control-prev-icon {
-    height: 35px;
-    width: 35px;
-    outline: black;
-    background-size: 90%, 90%;
-    background-image: url('/images/left.png');
-}
-
-.carousel-item img {
-    border-radius: 20px;
-    height: 300px !important;
-
-}
-
-/* ----- BODY ----- */
+/* -- End Slider -- */
 
 .choose-series {
     width: 70%;
@@ -200,20 +141,59 @@ a {
     text-decoration: none;
 }
 
-
-/* Responsive */
-@media only screen and (max-width: 960px) {
-    .carousel {
-        width: 100%;
-        height: 33%;
-    }
-
-    .carousel-item img {
-        border-radius: 10px;
-        height: 200px !important;
-    }
-
-    .user-icons {
-        margin-left: 50px;
-    }
+/* Slider */
+.carousel {
+    width: 75%;
+    height: 300px;
 }
+
+.carousel-indicators button {
+    background-color: gray !important;
+}
+
+.carousel-indicators button.active {
+    background-color: black !important;
+}
+
+.carousel-control-prev {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.carousel-control-next {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.carousel-control-next-icon {
+    height: 35px;
+    width: 35px;
+    outline: black;
+    background-size: 90%, 90%;
+    background-image: url('/images/right.png');
+}
+
+.carousel-control-prev-icon {
+    height: 35px;
+    width: 35px;
+    outline: black;
+    background-size: 90%, 90%;
+    background-image: url('/images/left.png');
+}
+
+.carousel-control-next-icon:after {
+    color: red;
+}
+
+.carousel-control-prev-icon:after {
+    color: red;
+}
+
+.carousel-item img {
+    border-radius: 20px;
+    height: 300px;
+}
+
+/* End of Slider */

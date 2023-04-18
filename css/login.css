@@ -1,80 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;1,400&display=swap');
 
 body {
-    background-color: #f2f2f2;
+    background-color: #3e3e3e;
     color: white;
     font-family: 'Open Sans', sans-serif;
 }
 
-
-.login-container {
+.container {
+    width: 400px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: 100px auto;
-    max-width: 500px;
-    padding: 30px;
+    border-radius: 20px;
 }
 
-h1 {
-    text-align: center;
-    color: black;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 5px;
+.container>* {
     color: black;
 }
 
-input[type="text"],
-input[type="password"] {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
-    padding: 10px;
-    width: 100%;
-}
-
-button[type="submit"] {
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-    padding: 10px;
-    width: 100%;
-}
-
-button[type="submit"]:hover {
-    background-color: #3e8e41;
-}
-
-.form-footer {
-    margin-top: 20px;
-    text-align: center;
-    color: #666;
-}
-
-.form-footer a {
-    color: blue;
-    text-decoration: none;
-}
-
-.form-footer a:hover {
-    font-weight: bold;
-}
-
-.forgot-password>* {
+hr {
+    width: 95%;
     margin: 10px 0;
+}
+
+.submit-btn {
+    margin: 0 auto;
+}
+
+.form-control::placeholder {
+    color: lightgray;
+    font-style: italic;
 }

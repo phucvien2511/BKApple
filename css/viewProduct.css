@@ -1,0 +1,23 @@
+.picture-container {
+    text-align: center;
+    width: 300px;
+}
+
+.thumbnail {
+    width: 100%;
+}
+
+.picsmall {
+    width: 100%;
+}
+
+.main-content {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+button.chooseColor {
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+}
