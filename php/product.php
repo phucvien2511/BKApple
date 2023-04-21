@@ -33,7 +33,7 @@
                                 <a class="nav-link white" href="/php/watch.php">Watch</a>
                                 <a class="nav-link white" href="/php/sound.php">Âm thanh</a>
                                 <a class="nav-link white" href="/php/accessory.php">Phụ kiện</a>
-                                <a class="nav-link white" href="/php/warranty.php">Bảo hành</a>
+                                <a class="nav-link white" href="/php/news.php">Tin tức</a>
                                 <a class="nav-link white" href="/php/about.php">Về chúng tôi</a>
                             </div>
 
@@ -46,12 +46,30 @@
                 </nav>
             </div>
             <div class="col-sm-1 d-flex flex-row align-items-center justify-content-end user-icons">
-                <a href="/html/cart.html" class="white">
-                    <i class="fa-solid fa-cart-shopping fa-xl"></i>
-                </a>
-                <a href="/php/login.php" class="white">
-                    <i class="fa-solid fa-circle-user fa-xl"></i>
-                </a>
+                <div class="dropdown">
+                    <a class="btn btn-sm dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <?php
+                        session_start();
+                        if (isset($_SESSION['user_login'])) {
+                            echo '<span><img src=' . $_SESSION['user_avatar'] . ' alt="User avatar" style="width: 35px; height: 35px; border-radius: 50%; margin-right: 5px"></span>';
+                            echo '<span class="white">' . $_SESSION['user_login'] . '</span>';
+                        } else {
+                            echo '<i class="fa-solid fa-circle-user fa-xl white"></i>';
+                        }
+                        ?>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-lg-end">
+                        <?php
+                        if (isset($_SESSION['user_login'])) {
+                            echo '<li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
+                                    <li><a class="dropdown-item" href="#">Giỏ hàng</a></li>
+                                    <li><a class="dropdown-item" href="/php/logout.php">Đăng xuất</a></li>';
+                        } else {
+                            echo '<li><a class="dropdown-item" href="/php/login.php">Đăng nhập</a></li>';
+                        }
+                        ?>
+                    </ul>
+                </div>
             </div>
         </div>
         <!-- End of Header -->
@@ -209,97 +227,88 @@
         ?>
         <!-- Content end -->
         <!-- Footer -->
-        <div class="row">
-            <footer class="text-center text-lg-start bg-dark text-muted">
-                <!-- Section: Social media -->
-                <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-                    <!-- Left -->
-                    <div class="me-5 d-none d-lg-block">
-                        <img src="/images/apple.png" alt="Apple logo" class="logo">
-                        BKApple
-                    </div>
-                    <!-- Left -->
-
-                    <!-- Right -->
-                    <div>
-                        <a href="#" class="me-4 text-reset">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                    </div>
-                    <!-- Right -->
-                </section>
-                <!-- Section: Social media -->
-
-                <!-- Section: Links  -->
-                <section class="">
-                    <div class="container text-center text-md-start mt-5">
-                        <!-- Grid row -->
-                        <div class="row mt-3">
-                            <!-- Grid column -->
-                            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                                <!-- Content -->
-                                <h6 class="text-uppercase fw-bold mb-4">
-                                    <i class="fas fa-gem me-3"></i>
-                                    Giới thiệu
-                                </h6>
-                                <p>
-                                    Thành lập từ năm 2013 với gần 20 chi nhánh trên toàn quốc. BKApple là công ty trách
-                                    nhiệm hữu hạn nhiều thành viên, chuyên bán các thiết bị điện tử chính hãng của
-                                    Apple.
-                                </p>
-                            </div>
-                            <!-- Grid column -->
-
-                            <!-- Grid column -->
-                            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                                <!-- Links -->
-                                <h6 class="text-uppercase fw-bold mb-4">Hệ thống cửa hàng</h6>
-                                <p><a href="#!" class="text-reset">Danh sách cửa hàng</a></p>
-                                <p><a href="#!" class="text-reset">Nội quy cửa hàng</a></p>
-                                <p><a href="#!" class="text-reset">Chính sách bảo hành & đổi trả</a></p>
-                            </div>
-                            <!-- Grid column -->
-
-                            <!-- Grid column -->
-                            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                                <!-- Links -->
-                                <h6 class="text-uppercase fw-bold mb-4">Hỗ trợ khách hàng</h6>
-                                <p><a href="#" class="text-reset">Hướng dẫn mua hàng online</a></p>
-                                <p><a href="#" class="text-reset">Chính sách giao hàng</a></p>
-                                <p><a href="#" class="text-reset">Hướng dẫn thanh toán</a></p>
-                            </div>
-                            <!-- Grid column -->
-
-                            <!-- Grid column -->
-                            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                                <!-- Links -->
-                                <h6 class="text-uppercase fw-bold mb-4">Thông tin liên lạc</h6>
-                                <p>
-                                    268 Lý Thường Kiệt, Phường 14, Quận 10, TPHCM
-                                </p>
-                                <p>
-                                    bkapple@hcmut.com
-                                </p>
-                                <p>
-                                    (028) 0123456.
-                                </p>
-                            </div>
-                            <!-- Grid column -->
-                        </div>
-                        <!-- Grid row -->
-                    </div>
-                </section>
-                <!-- Section: Links  -->
-
-                <!-- Copyright -->
-                <div class="text-center p-4" style="background-color: rgba(34,34,34,255);">
-                    © 2023 Copyright:
-                    <a class="text-reset fw-bold" href="https://github.com/phucvien2511/BKApple">Github</a>
+        <footer class="row text-center text-lg-start bg-dark text-muted">
+            <!-- Section: Social media -->
+            <div class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+                <div class="me-5 d-none d-lg-block">
+                    <img src="/images/apple.png" alt="Apple logo" class="logo">
+                    BKApple
                 </div>
-                <!-- Copyright -->
-            </footer>
-            <!-- Footer -->
-        </div>
+                <a href="" class="me-4 text-reset">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+            <!-- Section: Social media -->
+
+            <!-- Section: Links  -->
+            <div>
+                <div class="container text-center text-md-start mt-5">
+                    <!-- Grid row -->
+                    <div class="row mt-3">
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                            <!-- Content -->
+                            <h6 class="text-uppercase fw-bold mb-4">
+                                <i class="fas fa-gem me-3"></i>
+                                Giới thiệu
+                            </h6>
+                            <p>
+                                Thành lập từ năm 2013 với gần 20 chi nhánh trên toàn quốc. BKApple là công ty trách
+                                nhiệm hữu hạn nhiều thành viên, chuyên bán các thiết bị điện tử chính hãng của
+                                Apple.
+                            </p>
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                            <!-- Links -->
+                            <h6 class="text-uppercase fw-bold mb-4">Hệ thống cửa hàng</h6>
+                            <p><a href="#!" class="text-reset">Danh sách cửa hàng</a></p>
+                            <p><a href="#!" class="text-reset">Nội quy cửa hàng</a></p>
+                            <p><a href="#!" class="text-reset">Chính sách bảo hành & đổi trả</a></p>
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                            <!-- Links -->
+                            <h6 class="text-uppercase fw-bold mb-4">Hỗ trợ khách hàng</h6>
+                            <p><a href="#!" class="text-reset">Hướng dẫn mua hàng online</a></p>
+                            <p><a href="#!" class="text-reset">Chính sách giao hàng</a></p>
+                            <p><a href="#!" class="text-reset">Hướng dẫn thanh toán</a></p>
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                            <!-- Links -->
+                            <h6 class="text-uppercase fw-bold mb-4">Thông tin liên lạc</h6>
+                            <p>
+                                268 Lý Thường Kiệt, Phường 14, Quận 10, TPHCM
+                            </p>
+                            <p>
+                                bkapple@hcmut.com
+                            </p>
+                            <p>
+                                (028) 0123456.
+                            </p>
+                        </div>
+                        <!-- Grid column -->
+                    </div>
+                    <!-- Grid row -->
+                </div>
+            </div>
+            <!-- Section: Links  -->
+
+            <!-- Copyright -->
+            <div class="text-center p-4" style="background-color: rgba(34,34,34,255);">
+                &copy; 2023 Copyright:
+                <a class="text-reset fw-bold" href="https://github.com/phucvien2511/BKApple">Github</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
     </div>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery-3.6.1.min.js"></script>

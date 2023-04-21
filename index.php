@@ -33,7 +33,7 @@
                                 <a class="nav-link white" href="/php/watch.php">Watch</a>
                                 <a class="nav-link white" href="/php/sound.php">Âm thanh</a>
                                 <a class="nav-link white" href="/php/accessory.php">Phụ kiện</a>
-                                <a class="nav-link white" href="/php/warranty.php">Bảo hành</a>
+                                <a class="nav-link white" href="/php/news.php">Tin tức</a>
                                 <a class="nav-link white" href="/php/about.php">Về chúng tôi</a>
                             </div>
 
@@ -45,13 +45,26 @@
                     </div>
                 </nav>
             </div>
-            <div class="col-sm-1 d-flex flex-row align-items-center justify-content-end user-icons">
-                <a href="/html/cart.html" class="white">
-                    <i class="fa-solid fa-cart-shopping fa-xl"></i>
-                </a>
-                <a href="/php/login.php" class="white">
-                    <i class="fa-solid fa-circle-user fa-xl"></i>
-                </a>
+            <div class="col-sm-1 d-flex flex-row align-items-center justify-content-center user-icons">
+                <?php
+                session_start();
+                if (isset($_SESSION['user_login'])) {
+                    echo '<div class="dropdown">
+                            <a class="btn btn-sm dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span><img src="' . $_SESSION['user_avatar'] . '" alt="User avatar" style="width: 35px; height: 35px; border-radius: 50%; margin-right: 5px"></span>
+                                <span class="white">' . $_SESSION['user_login'] . '</span> 
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-lg-end">
+                                <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
+                                <li><a class="dropdown-item" href="#">Giỏ hàng</a></li>
+                                <li><a class="dropdown-item" href="/php/logout.php">Đăng xuất</a></li> 
+                            </ul>
+                        </div>';
+                } else {
+                    echo '<a href="/php/login.php" class="btn btn-sm btn-outline-light">Đăng nhập</a>';
+                }
+                ?>
+
             </div>
         </div>
         <!-- End of Header -->

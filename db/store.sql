@@ -17,13 +17,14 @@ CREATE TABLE admin (
   id VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL UNIQUE,
   password CHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   name VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  avatar text NOT NULL DEFAULT 'https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg',
   birthday DATE DEFAULT CURRENT_TIMESTAMP, 
   idNumber CHAR(12) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL UNIQUE,
   address text,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-INSERT INTO `admin` (`id`, `password`, `name`, `birthday`, `idNumber`, `address`) VALUES
-('!admin001', '123456', 'Lorem Ipsum', '2002-11-25', '0123456789123', '528 Nguyen Hue, Go Vap Dist, HCMC');
+INSERT INTO `admin` (`id`, `password`, `name`, `avatar`, `birthday`, `idNumber`, `address`) VALUES
+('!admin001', '123456', 'Lorem Ipsum', 'https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg', '2002-11-25', '0123456789123', '528 Nguyen Hue, Go Vap Dist, HCMC');
 --
 -- Table structure for table `customer`
 --
@@ -32,13 +33,15 @@ CREATE TABLE customer (
   username CHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL UNIQUE,
   password CHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   name VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  avatar text NOT NULL DEFAULT 'https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg',
   birthday DATE DEFAULT CURRENT_TIMESTAMP, 
   phone CHAR(12) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   mail VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   address text,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
+INSERT INTO `customer`(`id`, `username`, `password`, `name`, `avatar`, `birthday`, `phone`, `mail`, `address`) VALUES 
+(1,'guest','123456','Huỳnh Bảo Tín','https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg', '2002-02-17','0707829902','lonelyghost172@gmail.com','290/19 Lý Thường Kiệt');
 --
 -- Table structure for table `products`
 --

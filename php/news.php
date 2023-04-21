@@ -7,7 +7,7 @@
     <title>Tin tức</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/News.css">
+    <link rel="stylesheet" href="/css/news.css">
 
 </head>
 
@@ -23,9 +23,7 @@
             <div class="col-sm-6 col-lg-9 mx-auto text-end mr-2">
                 <nav class="navbar navbar-expand-lg">
                     <div class="container">
-                        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-                            aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
@@ -36,13 +34,12 @@
                                 <a class="nav-link white" href="/php/watch.php">Watch</a>
                                 <a class="nav-link white" href="/php/sound.php">Âm thanh</a>
                                 <a class="nav-link white" href="/php/accessory.php">Phụ kiện</a>
-                                <a class="nav-link white" href="/html/news.html">Tin tức</a>
-                                <a class="nav-link white" href="/html/about.html">Về chúng tôi</a>
+                                <a class="nav-link white" href="/php/news.php">Tin tức</a>
+                                <a class="nav-link white" href="/php/about.php">Về chúng tôi</a>
                             </div>
 
                             <form class="d-flex flex-row ml-auto justify-content-end">
-                                <input id="search" class="form-control me-2" type="text" placeholder="Tìm kiếm"
-                                    aria-label="Search">
+                                <input id="search" class="form-control me-2" type="text" placeholder="Tìm kiếm" aria-label="Search">
                                 <button class="btn btn-outline-light" type="submit">Tìm</button>
                             </form>
                         </div>
@@ -50,12 +47,30 @@
                 </nav>
             </div>
             <div class="col-sm-1 d-flex flex-row align-items-center justify-content-end user-icons">
-                <a href="/html/cart.html" class="white">
-                    <i class="fa-solid fa-cart-shopping fa-xl"></i>
-                </a>
-                <a href="/php/login.php" class="white">
-                    <i class="fa-solid fa-circle-user fa-xl"></i>
-                </a>
+                <div class="dropdown">
+                    <a class="btn btn-sm dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <?php
+                        session_start();
+                        if (isset($_SESSION['user_login'])) {
+                            echo '<span><img src=' . $_SESSION['user_avatar'] . ' alt="User avatar" style="width: 35px; height: 35px; border-radius: 50%; margin-right: 5px"></span>';
+                            echo '<span class="white">' . $_SESSION['user_login'] . '</span>';
+                        } else {
+                            echo '<i class="fa-solid fa-circle-user fa-xl white"></i>';
+                        }
+                        ?>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-lg-end">
+                        <?php
+                        if (isset($_SESSION['user_login'])) {
+                            echo '<li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
+                                    <li><a class="dropdown-item" href="#">Giỏ hàng</a></li>
+                                    <li><a class="dropdown-item" href="/php/logout.php">Đăng xuất</a></li>';
+                        } else {
+                            echo '<li><a class="dropdown-item" href="/php/login.php">Đăng nhập</a></li>';
+                        }
+                        ?>
+                    </ul>
+                </div>
             </div>
         </div>
         <!-- End of Header -->
@@ -270,7 +285,7 @@
         <!-- Footer -->
     </div>
 
-    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
