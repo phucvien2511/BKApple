@@ -11,25 +11,11 @@ USE `AppleStore`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Admin`
+-- Table structure for table `user`
 --
-CREATE TABLE admin (
-  id VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL UNIQUE,
-  password CHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  name VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  avatar text NOT NULL DEFAULT 'https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg',
-  birthday DATE DEFAULT CURRENT_TIMESTAMP, 
-  idNumber CHAR(12) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL UNIQUE,
-  address text,
-  PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-INSERT INTO `admin` (`id`, `password`, `name`, `avatar`, `birthday`, `idNumber`, `address`) VALUES
-('!admin001', '123456', 'Lorem Ipsum', 'https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg', '2002-11-25', '0123456789123', '528 Nguyen Hue, Go Vap Dist, HCMC');
---
--- Table structure for table `customer`
---
-CREATE TABLE customer (
+CREATE TABLE user (
   id INT NOT NULL UNIQUE AUTO_INCREMENT,
+  role VARCHAR(5) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'user',
   username CHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL UNIQUE,
   password CHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   name VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -40,8 +26,10 @@ CREATE TABLE customer (
   address text,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-INSERT INTO `customer`(`id`, `username`, `password`, `name`, `avatar`, `birthday`, `phone`, `mail`, `address`) VALUES 
-(1,'guest','123456','Huỳnh Bảo Tín','https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg', '2002-02-17','0707829902','lonelyghost172@gmail.com','290/19 Lý Thường Kiệt');
+INSERT INTO `user`(`id`, `role`, `username`, `password`, `name`, `avatar`, `birthday`, `phone`, `mail`, `address`) VALUES 
+(1, 'user', 'guest','123456','Huỳnh Bảo Tín','https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg', '2002-02-17','0707829902','lonelyghost172@gmail.com','290/19 Lý Thường Kiệt'),
+(2, 'user', 'phuc','123456','Viên Minh Phúc','https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg', '2002-11-25','0123456789','phuc@gmail.com','528 Nguyễn Văn Khối, P.9, Q.Gò Vấp, TPHCM'),
+(3, 'admin', 'admin1', '123456', 'Lê Thị Admin', 'https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg', '2001-08-15', '028123456', 'admin1@bkapple.com', '250 Phạm Văn Chiêu');
 --
 -- Table structure for table `products`
 --
@@ -277,7 +265,7 @@ CREATE TABLE orders (
   address text,
   note text,
   PRIMARY KEY (orderId, customerId),
-  FOREIGN KEY (customerId) REFERENCES customer (id)
+  FOREIGN KEY (customerId) REFERENCES user (id)
     ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -292,7 +280,7 @@ CREATE TABLE order_product (
   PRIMARY KEY (orderId, customerId, productId),
   FOREIGN KEY (orderId) REFERENCES orders (orderId)
     ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (customerId) REFERENCES customer (id)
+  FOREIGN KEY (customerId) REFERENCES user (id)
     ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (productId) REFERENCES product (id)
     ON DELETE CASCADE ON UPDATE CASCADE
@@ -306,7 +294,7 @@ CREATE TABLE cart (
   productId VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   quantity INT NOT NULL DEFAULT 1,
   PRIMARY KEY (customerId, productId),
-  FOREIGN KEY (customerId) REFERENCES customer (id)
+  FOREIGN KEY (customerId) REFERENCES user (id)
     ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (productId) REFERENCES product (id)
     ON DELETE CASCADE ON UPDATE CASCADE
@@ -321,55 +309,11 @@ CREATE TABLE review (
   comment text,
   rate int DEFAULT 5,
   PRIMARY KEY (customerId, productId),
-  FOREIGN KEY (customerId) REFERENCES customer (id)
+  FOREIGN KEY (customerId) REFERENCES user (id)
     ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (productId) REFERENCES product (id)
     ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Table structure for table `repair`
---
-CREATE TABLE repair (
-  productId VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  productName VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (productId)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Table structure for table `repair_iPhone`
---
-CREATE TABLE repair_iPhone (
-  productId VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  component VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  price INT DEFAULT 0,
-  PRIMARY KEY (productId, component),
-  FOREIGN KEY (productId) REFERENCES repair (productId)
-    ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Table structure for table `repair_mac`
---
-CREATE TABLE repair_mac (
-  productId VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  component VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  price INT DEFAULT 0,
-  PRIMARY KEY (productId, component),
-  FOREIGN KEY (productId) REFERENCES repair (productId)
-    ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Table structure for table `repair_other`
---
-CREATE TABLE repair_other (
-  productId VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  classify VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  price INT DEFAULT 0,
-  PRIMARY KEY (productId),
-  FOREIGN KEY (productId) REFERENCES repair (productId)
-    ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 COMMIT;

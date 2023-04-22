@@ -70,8 +70,14 @@ a {
 }
 
 #search {
-    width: 200px;
+    width: 100%;
 }
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+    width: 90%;
+}
+
 
 /* Slider */
 .slider {

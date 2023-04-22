@@ -46,14 +46,19 @@ session_start();
 if (isset($_POST["submit-btn"])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $result = mysqli_query($db_connect, "SELECT * FROM customer where username = '$username' and password = '$password'");
+    $result = mysqli_query($db_connect, "SELECT * FROM user where username = '$username' and password = '$password'");
     $row = mysqli_fetch_assoc($result);
     if ($row) {
         $_SESSION['user_login'] = $username;
         $_SESSION['user_avatar'] = $row['avatar'];
+        $_SESSION['user_role'] = $row['role'];
         //--------------------//
 
-        header('Location: /index.php');
+        if ($row['role'] == 'user') {
+            header('Location: /index.php');
+        } else {
+            header('Location: /php/admin/viewProductList.php');
+        }
     } else {
         echo '<script>alert("Sai tài khoản hoặc mật khẩu. Vui lòng nhập lại.")</script>';
     }
