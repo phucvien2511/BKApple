@@ -33,8 +33,10 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $db = "applestore";
+
 //Connect to database
 $db_connect = mysqli_connect($servername, $username, $password, $db);
+
 //Check connection
 if (!$db_connect) {
     die("Connection failed: " . mysqli_connect_error());
@@ -42,18 +44,31 @@ if (!$db_connect) {
 
 session_start();
 
-
 if (isset($_POST["submit-btn"])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $result = mysqli_query($db_connect, "SELECT * FROM user where username = '$username' and password = '$password'");
+    
+    //Prepare the SQL query
+    $stmt = mysqli_prepare($db_connect, "SELECT * FROM user where username = ? and password = ?");
+    
+    //Bind the variables to the placeholders in the prepared statement
+    mysqli_stmt_bind_param($stmt, "ss", $username, $password);
+    
+    //Execute the prepared statement
+    mysqli_stmt_execute($stmt);
+    
+    //Get the result set from the prepared statement
+    $result = mysqli_stmt_get_result($stmt);
+    
+    //Fetch the row from the result set
     $row = mysqli_fetch_assoc($result);
+    
     if ($row) {
         $_SESSION['user_login'] = $username;
         $_SESSION['user_avatar'] = $row['avatar'];
         $_SESSION['user_role'] = $row['role'];
-        //--------------------//
-
+        
+        
         if ($row['role'] == 'user') {
             header('Location: /index.php');
         } else {
@@ -64,5 +79,6 @@ if (isset($_POST["submit-btn"])) {
     }
 }
 ?>
+
 
 </html>
