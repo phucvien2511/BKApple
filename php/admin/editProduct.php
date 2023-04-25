@@ -7,10 +7,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $message = 'Giá trị tên sản phẩm để trống';
 
-        echo "<SCRIPT> 
+        echo "<script> 
                 window.location.replace('addProduct.php');
                 alert('$message')
-            </SCRIPT>";
+            </script>";
         exit();
     }
 
@@ -19,10 +19,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $message = 'Giá trị giá tiền để trống';
 
-        echo "<SCRIPT> 
+        echo "<script> 
                 window.location.replace('addProduct.php');
                 alert('$message')
-            </SCRIPT>";
+            </script>";
         exit();
     }
 
@@ -57,10 +57,10 @@ if ($stmt = mysqli_prepare($db_connect, $name_query)) {
         if (mysqli_stmt_execute($stmt)) {
             $message = 'Cập nhật sản phẩm thành công';
 
-            echo "<SCRIPT>
+            echo "<script>
                     window.location.replace('viewProductList.php');
                     alert('$message')
-                </SCRIPT>";
+                </script>";
 
             mysqli_stmt_close($stmt);
             exit();
@@ -72,10 +72,10 @@ if ($stmt = mysqli_prepare($db_connect, $name_query)) {
     } catch (Exception $e) {
         $message = 'Không thể cập nhật thông tin sản phẩm';
 
-        echo "<SCRIPT>
+        echo "<script>
                 window.location.replace('viewProductList.php');
                 alert('$message')
-            </SCRIPT>";
+            </script>";
         mysqli_stmt_close($stmt);
         exit();
     }

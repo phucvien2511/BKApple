@@ -1,27 +1,20 @@
 <?php
 $offset = 10;
 $page = 1;
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST)) {
-        $page = 1;
-    } else {
-        $page = intval(trim($_POST["page"]));
-    }
-}
-?>
-
-<?php
 $servername = "localhost";
 $username = "root";
 $password = "";
 $db = "applestore";
+
 //Connect to database
 $db_connect = mysqli_connect($servername, $username, $password, $db);
 //Check connection
 if (!$db_connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
-
+if (isset($_POST["page"])) {
+    $page = intval($_POST["page"]);
+}
 $name_query = "SELECT * FROM user WHERE role = 'user'";
 $result = mysqli_query($db_connect, $name_query);
 

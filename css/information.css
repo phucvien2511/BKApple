@@ -1,0 +1,19 @@
+.wrapper {
+    width: 67%;
+    margin: 0 auto;
+}
+.avatar {
+    width: 250px;
+}
+
+@media only screen and (max-width: 768px) {
+    .wrapper {
+        width: 100%;
+    }
+    .avatar {
+        margin-bottom: 20px;
+    }
+}
+    
+}
+

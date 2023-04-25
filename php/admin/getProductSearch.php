@@ -1,17 +1,6 @@
 <?php
 $offset = 10;
 $page = 1;
-$productName = "";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST)) {
-        $productName = "";
-    } else {
-        $productName = trim($_POST["productName"]);
-    }
-}
-?>
-
-<?php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -22,9 +11,13 @@ $db_connect = mysqli_connect($servername, $username, $password, $db);
 if (!$db_connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
-$name_query = "SELECT * FROM product WHERE productName LIKE '%{$productName}%';";
-$result = mysqli_query($db_connect, $name_query);
-
+$productName = $_POST["productName"];
+$name_query = "SELECT * FROM product WHERE productName LIKE ?";
+$stmt = mysqli_prepare($db_connect, $name_query);
+$searchTerm = "%{$productName}%";
+mysqli_stmt_bind_param($stmt, "s", $searchTerm);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 $number_of_product = mysqli_num_rows($result);
 if ($number_of_product == 0) {
     echo "<tr>";

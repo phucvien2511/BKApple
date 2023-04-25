@@ -1,8 +1,7 @@
 <?php
-$product_id = 'AIRPOD2';
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (empty($_GET)) {
-        $product_id = 'AIRPOD2';
+        $product_id = '';
     } else {
         $product_id = trim($_GET["product_id"]);
     }
@@ -20,8 +19,11 @@ $db_connect = mysqli_connect($servername, $username, $password, $db);
 if (!$db_connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
-$name_query = "SELECT * FROM product WHERE ID = '$product_id';";
-$result = mysqli_query($db_connect, $name_query);
+$name_query = "SELECT * FROM product WHERE ID = ?";
+$stmt = mysqli_prepare($db_connect, $name_query);
+mysqli_stmt_bind_param($stmt, "i", $product_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 $rows = mysqli_fetch_assoc($result);
 
 $price = $rows['price'];

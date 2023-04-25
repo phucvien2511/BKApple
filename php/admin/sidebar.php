@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_login'])) {
+    header("location: /index.php");
+    exit;
+}
+?>
 <div class="sidebar d-flex flex-column flex-shrink-0 p-3 col-2">
     <a href="viewProductList.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <img src="/images/apple.png" alt="Apple logo" class="logo">
@@ -6,7 +13,7 @@
     <hr>
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="<?php session_start();
+            <img src="<?php
                         echo $_SESSION['user_avatar']; ?>" alt="Admin avatar" width="32" height="32" class="rounded-circle me-2">
             <strong>
                 <?php echo $_SESSION['user_login']; ?>

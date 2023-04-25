@@ -1,9 +1,9 @@
 <div class="header sticky-top d-flex flex-row justify-content-between">
-    <a class="col-sm-4 col-lg-2 title text-decoration-none" href="/index.php">
+    <a class="col-sm-4 col-lg-2 title text-decoration-none d-flex align-items-center px-3" href="/index.php">
         <img src="/images/apple.png" alt="Apple logo" class="logo">
-        BKApple
+        <span>BKApple</span>
     </a>
-    <div class="col-sm-6 col-lg-9 mx-auto text-end mr-2">
+    <div class="col-sm-6 col-lg-9 mx-auto text-end">
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,7 @@
         </nav>
     </div>
     <div class="col-sm-1 d-flex flex-row align-items-center justify-content-end user-icons">
-        <?php
+    <?php
         
         $servername = "localhost";
         $username = "root";
@@ -60,8 +60,8 @@
             if ($_SESSION['user_role'] == 'admin') {
                 echo '<li><a class="dropdown-item" href="/php/admin/viewProductList.php">Trang Admin</a></li>';
             }
-            echo '<li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
-                        <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="/php/cart/cartUI.php">Giỏ hàng<span class="badge bg-dark">'.$cart_count.'</span></a></li>
+            echo '<li><a class="dropdown-item" href="/php/information.php">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="/php/cart/cartUI.php">Giỏ hàng<span class="badge bg-dark cart-count">'.$cart_count.'</span></a></li>
                         <li><a class="dropdown-item" href="/php/logout.php">Đăng xuất</a></li> 
                     </ul>
                 </div>';
@@ -73,7 +73,4 @@
     </div>
 </div>
 <style>
-    .container-fluid {
-        padding: 0 !important;
-    }
 </style>

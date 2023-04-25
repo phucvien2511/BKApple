@@ -29,8 +29,11 @@ if (!$db_connect) {
         <?php include "../header.php" ?>
         <?php
 
-        $cart_query = "SELECT * from cart where customerId = '{$_SESSION['user_login']}';";
-        $result = mysqli_query($db_connect, $cart_query);
+        $cart_query = "SELECT * from cart where customerId = ?";
+        $stmt = mysqli_prepare($db_connect, $cart_query);
+        mysqli_stmt_bind_param($stmt, "s", $_SESSION['user_login']);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
         $productList = array();
         $priceList = array();
         $colorList = array();
@@ -57,13 +60,14 @@ if (!$db_connect) {
                 exit;
             }
             $tableList[] = $table_result;
-            $product_query = "SELECT * FROM product JOIN $table_result ON product.id = $table_result.id WHERE product.id = '$id'";
-            $product_result = mysqli_query($db_connect, $product_query);
-
+            $product_query = "SELECT * FROM product JOIN $table_result ON product.id = $table_result.id WHERE product.id = ?";
+            $stmt = mysqli_prepare($db_connect, $product_query);
+            mysqli_stmt_bind_param($stmt, "s", $id);
+            mysqli_stmt_execute($stmt);
+            $product_result = mysqli_stmt_get_result($stmt);
             $product = mysqli_fetch_assoc($product_result);
             $productList[] = $product;
             $colorList[] = $product['color'];
-
             $priceList[] = $product['price'] * $rows['quantity'];
 
             //Find if that product has capacity key
@@ -77,8 +81,11 @@ if (!$db_connect) {
         foreach ($priceList as $price) {
             $total_price += $price;
         }
-        $user_query = "SELECT * from user where username = '" . $_SESSION['user_login'] . "';";
-        $user_result = mysqli_query($db_connect, $user_query);
+        $user_query = "SELECT * from user where username = ?";
+        $stmt = mysqli_prepare($db_connect, $user_query);
+        mysqli_stmt_bind_param($stmt, "s", $_SESSION['user_login']);
+        mysqli_stmt_execute($stmt);
+        $user_result = mysqli_stmt_get_result($stmt);
         $user = mysqli_fetch_assoc($user_result);
         ?>
         <!-- End of Header -->
@@ -96,7 +103,7 @@ if (!$db_connect) {
                         '<button type="button" onclick="removeProductInCart(' . $i . ',\'' . $productList[$i]['id'] . '\')" class="btn-close btn-close-white remove-product-btn"></button>
                         <div class="row justify-content-between cart-item mb-3">
                         <div class="col-7 d-flex flex-row justify-content-evenly align-items-center px-0">
-                        <img class="product-img" src="' . $productList[$i]['thumbnail'] . ($colorList[$i] == 'white' ? '' : '_' . explode(',', $productList[$i]['color'])[0]) . '.png" style="width:125px;height:125px;" alt="' . $productList[$i]['productName'] . '">
+                        <img class="product-img" src="' . $productList[$i]['thumbnail'] . (($colorList[$i] == 'white' || $colorList[$i] == 'red') ? '' : '_' . explode(',', $productList[$i]['color'])[0]) . '.png" style="width:125px;height:125px;" alt="' . $productList[$i]['productName'] . '">
                             <div class="d-flex flex-column">
                                 <div class="col-12">
                                     <p class="detail-product" style="font-size: 18px; font-weight: bold;">';
@@ -112,7 +119,7 @@ if (!$db_connect) {
                                         <div class="dropdown">';
                         /* Disable toggle dropdown if product only has 1 color */
                         echo '<button class="btn btn-secondary dropdown-toggle" type="button" 
-                                                data-bs-toggle="dropdown" aria-expanded="false" id="dropdown' . $i . '"' . ($colorList[$i] == 'white' ? 'disabled' : '') . '>';
+                                                data-bs-toggle="dropdown" aria-expanded="false" id="dropdown' . $i . '"' . (($colorList[$i] == 'white' || $colorList[$i] == 'red') ? 'disabled' : '') . '>';
                         echo ucfirst($colors[0]);
                         echo '</button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdown' . $i . '">';
@@ -129,9 +136,9 @@ if (!$db_connect) {
                         echo number_format($priceList[$i], 0, '.', '.') . 'đ';
                         echo '</p>
                             <div class="input-group mt-2">
-                                <button class="btn btn-outline-secondary dec-btn" type="button" onclick="updateCart(\''.$i.'\',\'' . $productList[$i]['id'] . '\', \'dec\')">-</button>
+                                <button class="btn btn-dark btn-outline-secondary dec-btn" type="button" onclick="updateCart(\''.$i.'\',\'' . $productList[$i]['id'] . '\', \'dec\')">-</button>
                                 <input type="number" class="form-control text-center quantity-input" aria-label="Amount" value="'. ($priceList[$i] / $productList[$i]['price']).'" readonly>
-                                <button class="btn btn-outline-secondary inc-btn" type="button" onclick="updateCart(\''.$i.'\',\'' . $productList[$i]['id'] . '\', \'inc\')">+</button>
+                                <button class="btn btn-dark btn-outline-secondary inc-btn" type="button" onclick="updateCart(\''.$i.'\',\'' . $productList[$i]['id'] . '\', \'inc\')">+</button>
                             </div>
                         </div>
                         </div>';
@@ -176,19 +183,19 @@ if (!$db_connect) {
             `<p class="fw-bold">Thông tin khách hàng</p>
                 <form>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="name" placeholder="Họ và tên" value="<?php echo $user['name']; ?>">
+                        <input type="text" class="form-control" id="name" placeholder="Họ và tên" value="<?php echo $user['name']; ?>" required>
                         <label for="name" style="color: grey;">Họ và tên</label>
                     </div>
                     <div class="form-floating my-3">
-                        <input type="text" class="form-control" id="phone" placeholder="Số điện thoại" value="<?php echo $user['phone']; ?>">
+                        <input type="text" class="form-control" id="phone" placeholder="Số điện thoại" value="<?php echo $user['phone']; ?>" required>
                         <label for="phone" style="color: grey;">Số điện thoại</label>
                     </div>
                     <div class="form-floating my-3">
-                        <input type="text" class="form-control" id="phone" placeholder="Mail (Ví dụ: example@gmail.com)" value="<?php echo $user['mail']; ?>">
+                        <input type="text" class="form-control" id="phone" placeholder="Mail (Ví dụ: example@gmail.com)" value="<?php echo $user['mail']; ?>" required>
                         <label for="phone" style="color: grey;">Mail</label>
                     </div>
                     <div class="form-floating my-3">
-                        <input type="text" class="form-control" id="phone" placeholder="Địa chỉ (Ví dụ: 268 Lý Thường Kiệt, Phường 14, Quận 10, TP.HCM" value="<?php echo $user['address']; ?>">
+                        <input type="text" class="form-control" id="phone" placeholder="Địa chỉ (Ví dụ: 268 Lý Thường Kiệt, Phường 14, Quận 10, TP.HCM" value="<?php echo $user['address']; ?>" required>
                         <label for="phone" style="color: grey;">Địa chỉ giao hàng</label>
                     </div>
                     <div class="form-floating my-3">
@@ -196,13 +203,8 @@ if (!$db_connect) {
                         <label for="notes" style="color: grey;">Ghi chú thêm (nếu có)</label>
                     </div>
                     <div class="form-floating my-3">
-                        <select class="form-select" id="extraSelect" aria-label="Áp dụng khuyến mãi">
-                            <option selected hidden>Chọn khuyến mãi</option>
-                            <option value="1">Giảm 500.000đ khi chọn giao hàng tận nơi</option>
-                            <option value="2">Tặng kèm ba lô, lót chuột, ốp lưng, bảo hiểm rơi vỡ</option>
-                            <option value="3">Tặng phiếu mua phụ kiện 300.000đ</option>
-                        </select>
-                        <label for="extraSelect" style="color: grey;">Khuyến mãi</label>
+                        <textarea class="form-control" placeholder="Mã khuyến mãi" id="voucher"></textarea>
+                        <label for="voucher" style="color: grey;">Mã khuyến mãi (nếu có)</label>
                     </div>
                     <div style="color: gold; font-style: italic; font-size: 15px;" class="mb-3">*Quý khách vui lòng kiểm tra kỹ thông tin trước khi đặt hàng.</div>
                     <div class="d-flex flex-row justify-content-between">
@@ -213,25 +215,6 @@ if (!$db_connect) {
                 </form>`;
         if (document.getElementById('onlineShip').checked) {
             document.getElementById('customer-info').innerHTML = onlineShipHTML;
-            let extraSelect = document.getElementById('extraSelect');
-            let totalPrice = document.getElementById('total-price');
-
-            // Add an event listener to the extraSelect element
-            extraSelect.addEventListener('change', function() {
-                // Get the selected option value
-                let selectedOption = extraSelect.value;
-                // Check if the first option was selected
-                if (selectedOption === '1') {
-                    // If so, apply a 2.5% discount to the total price
-                    totalPrice.innerText = "<?php
-                                            $new_price = $total_price - 500000;
-                                            echo number_format($new_price, 0, '.', '.') . 'đ';
-                                            ?> ";
-                } else {
-                    // Otherwise, set the total price to the original price
-                    totalPrice.innerText = "<?php echo number_format($total_price, 0, '.', '.') . 'đ'; ?>";
-                }
-            });
         }
         document.getElementById('onlineShip').addEventListener('click', function() {
             document.getElementById('customer-info').innerHTML = onlineShipHTML;
@@ -241,19 +224,19 @@ if (!$db_connect) {
                 `<form action="add_order.php" method="post">
                     <p class="fw-bold">Thông tin khách hàng</p>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="name" placeholder="Họ và tên" value="<?php echo $user['name']; ?>">
+                        <input type="text" class="form-control" id="name" placeholder="Họ và tên" value="<?php echo $user['name']; ?>" required>
                         <label for="name" style="color: grey;">Họ và tên</label>
                     </div>
                     <div class="form-floating my-3">
-                        <input type="text" class="form-control" id="phone" placeholder="Số điện thoại" value="<?php echo $user['phone']; ?>">
+                        <input type="text" class="form-control" id="phone" placeholder="Số điện thoại" value="<?php echo $user['phone']; ?>" required>
                         <label for="phone" style="color: grey;">Số điện thoại</label>
                     </div>
                     <div class="form-floating my-3">
-                        <input type="text" class="form-control" id="phone" placeholder="Mail (Ví dụ: example@gmail.com)" value="<?php echo $user['mail']; ?>">
+                        <input type="text" class="form-control" id="phone" placeholder="Mail (Ví dụ: example@gmail.com)" value="<?php echo $user['mail']; ?>" required>
                         <label for="phone" style="color: grey;">Mail</label>
                     </div>
                     <div class="form-floating mt-3 mb-1">
-                        <select class="form-select" id="storeSelect" aria-label="Cửa hàng" style="width: 100%">
+                        <select class="form-select" id="storeSelect" aria-label="Cửa hàng" style="width: 100%" required>
                             <option selected hidden>Chọn cửa hàng</option>
                             <option value="1">268 Lý Thường Kiệt, Phường 14, Quận 10, TP.HCM</option>
                             <option value="2">528 Nguyễn Văn Khối, Phường 9, Quận Gò Vấp, TP.HCM</option>
@@ -262,14 +245,10 @@ if (!$db_connect) {
                         </select>
                         <label for="storeSelect" style="color: grey;">Chọn cửa hàng</label>
                     </div>
-                    <div style="color: orange; font-size: 13px;">Nhận hàng sau 2-5 ngày.</div>
-                    <div class="form-floating mt-1 mb-3">
-                        <select class="form-select" id="extraSelect" aria-label="Áp dụng khuyến mãi">
-                            <option selected hidden>Chọn khuyến mãi</option>
-                            <option value="1">Tặng kèm ba lô, lót chuột, ốp lưng, bảo hiểm rơi vỡ</option>
-                            <option value="2">Tặng phiếu mua phụ kiện 300.000đ</option>
-                        </select>
-                        <label for="extraSelect" style="color: grey;">Khuyến mãi</label>
+                    <div style="color: orange; font-size: 13px;">Nhân viên sẽ liên lạc với quý khách khi có hàng (sau 2-5 ngày).</div>
+                    <div class="form-floating my-3">
+                        <textarea class="form-control" placeholder="Mã khuyến mãi" id="voucher"></textarea>
+                        <label for="voucher" style="color: grey;">Mã khuyến mãi (nếu có)</label>
                     </div>
                     <div style="color: gold; font-style: italic; font-size: 15px;" class="mb-3">*Quý khách vui lòng kiểm tra kỹ thông tin trước khi đặt hàng.</div>
                     <div class="d-flex flex-row justify-content-between">
@@ -317,7 +296,7 @@ if (!$db_connect) {
         function updateCart(index, product, amount) {
             $(document).ready(function() {
                 $.ajax({
-                    url: '/php/cart/update_cart.php?id=' + product + '&amt=' + amount,
+                    url: '/php/cart/updateQuantity.php?id=' + product + '&amt=' + amount,
                     type: 'GET',
                     success: function(response) {
                         let formattedResponse = JSON.parse(response);
@@ -329,8 +308,8 @@ if (!$db_connect) {
                         payPrice.innerText = formatPrice(formattedResponse.total_price) + 'đ';
                         let totalPrice = document.querySelector('#total-price');
                         totalPrice.innerText = formatPrice(formattedResponse.cart_price) + 'đ';
-                        console.log(parseInt(formattedResponse.total_price)/parseInt(newQuantity));
-                        console.log(totalPrice);
+                        // console.log(parseInt(formattedResponse.total_price)/parseInt(newQuantity));
+                        // console.log(totalPrice);
                         if (parseInt(newQuantity) === 1) {
                             document.querySelectorAll('.dec-btn')[index].disabled = true;
                         }
@@ -343,8 +322,37 @@ if (!$db_connect) {
                         else {
                             document.querySelectorAll('.inc-btn')[index].disabled = false;
                         }
-                    },
+                    }
 
+                });
+            });
+        }
+        function removeProductInCart(index, product) {
+            $(document).ready(function() {
+                $.ajax({
+                    url: '/php/cart/removeProduct.php?id=' + product,
+                    type: 'GET',
+                    success: function(response) {
+                        let formattedResponse = JSON.parse(response);
+                        //Decrease the price of cart
+                        let totalPrice = document.querySelector('#total-price');
+                        console.log(totalPrice.innerText);
+                        let totalPrice_int = parseInt(totalPrice.innerText.replace('đ', '').replace('.', '').trim()) * 1000;
+                        console.log(totalPrice_int);
+                        totalPrice.innerText = formatPrice(totalPrice_int - parseInt(formattedResponse.removed_price)) + 'đ';
+                        console.log(formattedResponse.removed_price);
+                        //Remove the product from cart
+                        alert('Xóa sản phẩm thành công');
+                        let cartItem = document.querySelectorAll('.cart-item')[index];
+                        cartItem.remove();
+                        let removeBtn = document.querySelectorAll('.remove-product-btn')[index];
+                        removeBtn.remove();
+                        
+                        //Reload page if cart is empty
+                        if (document.querySelectorAll('.cart-item').length === 0) {
+                            location.reload();
+                        }
+                    }
                 });
             });
         }
@@ -356,30 +364,6 @@ if (!$db_connect) {
             return formatter.format(price).replace('₫', '').trim();
         }
 
-        // function formatPrice(price) {
-        //     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        // }
-    </script>
-    <script>
-        function removeProductInCart(index, product) {
-            $(document).ready(function() {
-                $.ajax({
-                    url: '/php/cart/removeProduct.php?id=' + product,
-                    type: 'GET',
-                    success: function(response) {
-                        alert('Xóa sản phẩm thành công');
-                        let cartItem = document.querySelectorAll('.cart-item')[index];
-                        cartItem.remove();
-                        let removeBtn = document.querySelectorAll('.remove-product-btn')[index];
-                        removeBtn.remove();
-                        //Reload page if cart is empty
-                        if (document.querySelectorAll('.cart-item').length === 0) {
-                            location.reload();
-                        }
-                    }
-                });
-            });
-        }
     </script>
 
 </body>

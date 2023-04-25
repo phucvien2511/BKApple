@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION['user_login'])) {
+    header("Location: ../login.php"); // redirect to login page
+    exit;
+} 
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -9,7 +14,7 @@ $db_connect = mysqli_connect($servername, $username, $password, $db);
 if (!$db_connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
-session_start();
+
 //Check url paramater
 $id = $_POST['id'];
 $name_query = "INSERT INTO cart (customerId, productId, quantity) VALUES ('{$_SESSION['user_login']}', '$id', '1');";

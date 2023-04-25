@@ -7,10 +7,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $message = 'Mật khẩu để trống';
 
-        echo "<SCRIPT> 
+        echo "<script> 
                 window.location.replace('./addUser.php');
                 alert('$message')
-            </SCRIPT>";
+            </script>";
         exit();
     }
 
@@ -19,10 +19,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $message = 'Tên người dùng để trống';
 
-        echo "<SCRIPT> 
+        echo "<script> 
                 window.location.replace('./addUser.php');
                 alert('$message')
-            </SCRIPT>";
+            </script>";
         exit();
     }
 
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $address = "";
     }
 } else {
-    header("location: ./userManager.php");
+    header("location: viewUserList.php");
 }
 ?>
 
@@ -63,25 +63,25 @@ if ($stmt = mysqli_prepare($db_connect, $name_query)) {
         if (mysqli_stmt_execute($stmt)) {
             $message = 'Cập nhật thông tin khách hàng thành công';
 
-            echo "<SCRIPT>
-                    window.location.replace('./userManager.php');
+            echo "<script>
+                    window.location.replace('viewUserList.php');
                     alert('$message')
-                </SCRIPT>";
+                </script>";
 
             mysqli_stmt_close($stmt);
             exit();
         } else {
-            header("location: ./userManager.php");
+            header("location: viewUserList.php");
             mysqli_stmt_close($stmt);
             exit();
         }
     } catch (Exception $e) {
         $message = 'Không thể cập nhật thông tin khách hàng';
 
-        echo "<SCRIPT>
-                window.location.replace('./userManager.php');
+        echo "<script>
+                window.location.replace('viewUserList.php');
                 alert('$message')
-            </SCRIPT>";
+            </script>";
         mysqli_stmt_close($stmt);
         exit();
     }

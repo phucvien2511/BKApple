@@ -1,15 +1,4 @@
 <?php
-$user_id = 'Remind';
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    if (empty($_GET)) {
-        $user_id = 'Remind';
-    } else {
-        $user_id = trim($_GET["user_id"]);
-    }
-}
-?>
-
-<?php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -20,8 +9,17 @@ $db_connect = mysqli_connect($servername, $username, $password, $db);
 if (!$db_connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
-$name_query = "SELECT * FROM user WHERE id = '$user_id';";
-$result = mysqli_query($db_connect, $name_query);
+
+$user_id = $_GET['user_id'];
+$name_query = "SELECT * FROM user WHERE id = ?";
+$stmt = mysqli_prepare($db_connect, $name_query);
+
+// Bind the parameter to the prepared statement and execute it
+mysqli_stmt_bind_param($stmt, "i", $user_id);
+mysqli_stmt_execute($stmt);
+
+// Get the results of the query
+$result = mysqli_stmt_get_result($stmt);
 $rows = mysqli_fetch_assoc($result);
 ?>
 
@@ -53,7 +51,7 @@ $rows = mysqli_fetch_assoc($result);
 
                 <div class="row">
                     <div class="col-2">
-                        <a href="./editUserView.php?user_id=<?php echo "$user_id"; ?>" class="btn btn-dark">Chỉnh sửa</a>
+                        <a href="./editUserUI.php?user_id=<?php echo "$user_id"; ?>" class="btn btn-dark">Chỉnh sửa</a>
                     </div>
 
                     <div class="col-2">
@@ -125,7 +123,44 @@ $rows = mysqli_fetch_assoc($result);
                         </table>
                     </div>
                 </div>
+                <div class="row">
+                    <h2>Lịch sử mua hàng (Đang lấy tạm từ giỏ hàng nha :>)</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sản phẩm</th>
+                                <th scope="col">Số lượng</th>
+                                <th scope="col">Đơn giá</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $name_query = "SELECT * FROM cart WHERE customerId = '{$rows['username']}';";
+                            $result = mysqli_query($db_connect, $name_query);
 
+                            $number_of_product = mysqli_num_rows($result);
+                            if ($number_of_product == 0) {
+                                echo "<tr>";
+                                echo "<td colspan='3'>Không có sản phẩm nào.</td>";
+                                echo "</tr>";
+                            }
+
+                            while ($rows = mysqli_fetch_assoc($result)) {
+                                $product_query = "SELECT * FROM product WHERE id = '{$rows['productId']}';";
+                                $product_result = mysqli_query($db_connect, $product_query);
+                                $product = mysqli_fetch_assoc($product_result);
+                                echo "<tr>";
+                                echo "<th scope='row'>{$product["productName"]}</th>";
+                                echo "<td>{$rows["quantity"]}</td>";
+                                echo "<td>";
+                                echo $product['price'] * $rows['quantity'];
+                                echo "</td>";
+                                echo "</tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="row">
                     <h2>Lịch sử đánh giá</h2>
                     <table class="table">
@@ -138,7 +173,7 @@ $rows = mysqli_fetch_assoc($result);
                         </thead>
                         <tbody>
                             <?php
-                            $name_query = "SELECT * FROM review, product WHERE review.productId = product.Id and review.customerId = '{$rows['id']}';";
+                            $name_query = "SELECT * FROM review, product WHERE review.productId = product.id and review.customerId = '{$_GET['user_id']}';";
                             $result = mysqli_query($db_connect, $name_query);
 
                             $number_of_product = mysqli_num_rows($result);
@@ -149,6 +184,7 @@ $rows = mysqli_fetch_assoc($result);
                             }
 
                             while ($rows = mysqli_fetch_assoc($result)) {
+
                                 echo "<tr>";
                                 echo "<th scope='row'>{$rows["productName"]}</th>";
                                 echo "<td>{$rows["comment"]}</td>";

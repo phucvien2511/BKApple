@@ -89,7 +89,7 @@ if ($stmt = mysqli_prepare($db_connect, $name_query)) {
         $message = 'Không thể thêm khách hàng';
 
         echo "<SCRIPT> 
-                window.location.replace('addUser.php');
+                window.location.replace('addUserUI.php');
                 alert('$message')
             </SCRIPT>";
         exit();

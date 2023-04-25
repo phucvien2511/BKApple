@@ -1,18 +1,6 @@
 <?php
 $offset = 10;
 $page = 1;
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST)) {
-        $page = 1;
-        $sort = "";
-    } else {
-        $page = intval(trim($_POST["page"]));
-        $sort = $_POST["sort"];
-    }
-}
-?>
-
-<?php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -23,13 +11,23 @@ $db_connect = mysqli_connect($servername, $username, $password, $db);
 if (!$db_connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
-
-if ($sort == "") $name_query = "SELECT * FROM product;";
-else $name_query = "SELECT * FROM product, {$sort} WHERE product.id = {$sort}.id;";
-
-/*$name_query = "SELECT * FROM product;";*/
-$result = mysqli_query($db_connect, $name_query);
-
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST)) {
+        $page = 1;
+        $sort = "";
+    } else {
+        $page = intval(trim($_POST["page"]));
+        $sort = $_POST["sort"];
+    }
+}
+if ($sort == "") {
+    $name_query = "SELECT * FROM product;";
+} else {
+    $name_query = "SELECT * FROM product, {$sort} WHERE product.id = {$sort}.id;";  
+}
+$stmt = mysqli_prepare($db_connect, $name_query);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 $number_of_product = mysqli_num_rows($result);
 if ($number_of_product == 0) {
     echo "<tr>";

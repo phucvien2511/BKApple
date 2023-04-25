@@ -1,17 +1,7 @@
 <?php
 $offset = 10;
 $page = 1;
-$name = "";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST)) {
-        $name = "";
-    } else {
-        $name = trim($_POST["name"]);
-    }
-}
-?>
-
-<?php
+$name = $_POST['name'];
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -22,8 +12,13 @@ $db_connect = mysqli_connect($servername, $username, $password, $db);
 if (!$db_connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
-$name_query = "SELECT * FROM user WHERE name LIKE '%{$name}%' AND role = 'user';";
-$result = mysqli_query($db_connect, $name_query);
+$name_query = "SELECT * FROM user WHERE name LIKE ? AND role = 'user';";
+$stmt = mysqli_prepare($db_connect, $name_query);
+mysqli_stmt_bind_param($stmt, "s", $name);
+mysqli_stmt_execute($stmt);
+
+// Get the results of the query
+$result = mysqli_stmt_get_result($stmt);
 
 $number_of_product = mysqli_num_rows($result);
 if ($number_of_product == 0) {

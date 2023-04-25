@@ -1,13 +1,4 @@
-<?php
-$user_id = 'Remind';
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    if (empty($_GET)) {
-        $user_id = 'Remind';
-    } else {
-        $user_id = trim($_GET["user_id"]);
-    }
-}
-?>
+
 
 <?php
 $servername = "localhost";
@@ -15,13 +6,17 @@ $username = "root";
 $password = "";
 $db = "applestore";
 //Connect to database
+$user_id = $_GET['user_id'];
 $db_connect = mysqli_connect($servername, $username, $password, $db);
 //Check connection
 if (!$db_connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
-$name_query = "SELECT * FROM customer WHERE ID = '$user_id';";
-$result = mysqli_query($db_connect, $name_query);
+$name_query = "SELECT * FROM user WHERE ID = ?";
+$stmt = mysqli_prepare($db_connect, $name_query);
+mysqli_stmt_bind_param($stmt, "i", $user_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 $rows = mysqli_fetch_assoc($result);
 ?>
 
@@ -32,27 +27,27 @@ $rows = mysqli_fetch_assoc($result);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - BKApple</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="row">
-            <?php include "userSidebar.php" ?>
+            <?php include "sidebar.php" ?>
 
             <div class="content d-flex flex-column flex-shrink-0 p-3 text-white col-8 container">
                 <div class="navigation row">
                     <div class="col">
-                        <a href="viewUserList.php"><span class="material-symbols-outlined">arrow_back</span></a>
-                        <h1>Chỉnh Sửa Tài Khoản Khách Hàng</h1>
+                        <a href="viewUserDetail.php?user_id=<?php echo $user_id ?>"><span class="material-symbols-outlined">arrow_back</span></a>
+                        <h1>Chỉnh sửa tài khoản người dùng</h1>
                     </div>
                 </div>
 
                 <div class="row">
-                    <form class="g-3 needs-validation" method="post" action="./editUserControler.php" novalidate>
+                    <form class="g-3 needs-validation" method="post" action="editUser.php" novalidate>
                         <div class="col">
                             <div class="form-floating mb-3 mt-3">
                                 <input type="text" class="form-control" id="customerusername" placeholder="Enter username" name="customerusername" pattern="[A-Za-z0-9]+" required value="<?php echo "{$rows["username"]}"; ?>" readonly>
@@ -60,7 +55,7 @@ $rows = mysqli_fetch_assoc($result);
                             </div>
 
                             <div class="form-floating mb-3 mt-3">
-                                <input type="password" class="form-control" id="customerpassword" placeholder="Enter password" name="customerpassword" required value="<?php echo "{$rows["password"]}"; ?>">
+                                <input type="text" class="form-control" id="customerpassword" placeholder="Enter password" name="customerpassword" required value="<?php echo $rows['password']; ?>">
                                 <label for="customerpassword">Mật khẩu</label>
                                 <div class="invalid-feedback">
                                     Mật khẩu sai cú pháp.
@@ -76,7 +71,7 @@ $rows = mysqli_fetch_assoc($result);
                             </div>
 
                             <div class="form-floating mb-3 mt-3">
-                                <input type="date" class="form-control" id="birthDay" placeholder="Enter birthday" name="birthDay" value="<?php echo "{$rows["birthDay"]}"; ?>">
+                                <input type="date" class="form-control" id="birthDay" placeholder="Enter birthday" name="birthDay" value="<?php echo "{$rows["birthday"]}"; ?>">
                                 <label for="birthDay">Ngày sinh</label>
                             </div>
 
@@ -89,7 +84,7 @@ $rows = mysqli_fetch_assoc($result);
                             </div>
 
                             <div class="form-floating mb-3 mt-3">
-                                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" value="<?php echo "{$rows['gmail']}"; ?>">
+                                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" value="<?php echo "{$rows['mail']}"; ?>">
                                 <label for="email">Email</label>
                                 <div class="invalid-feedback">
                                     Email sai cú pháp.
@@ -103,22 +98,21 @@ $rows = mysqli_fetch_assoc($result);
 
                             <div class="row justify-content-end">
                                 <div class="col-1">
-                                    <a href="./userManager.php" class="btn btn-secondary">Hủy</a>
+                                    <a href="viewUserList.php" class="btn btn-secondary">Hủy</a>
                                 </div>
                                 <div class="col-1">
                                     <button type="submit" class="btn btn-secondary">Lưu</button>
                                 </div>
                             </div>
-
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <script src="../js/bootstrap.bundle.min.js"></script>
-    <script src="../js/jquery-3.6.1.min.js"></script>
-    <script src="../js/addProduct.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/jquery-3.6.1.min.js"></script>
+    <script src="/js/addProduct.js"></script>
 
     <script>
         (() => {

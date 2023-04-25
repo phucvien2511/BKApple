@@ -10,6 +10,7 @@
 body {
     background-color: #3e3e3e;
     color: white;
+
 }
 
 a {
@@ -29,6 +30,7 @@ a {
     background-color: black;
     align-items: center;
     justify-content: space-between;
+    padding: 0 12px !important;
 }
 
 .title {
@@ -48,7 +50,7 @@ a {
 #header-options>* {
     color: white;
     text-decoration: none;
-    margin: 0 10px;
+    margin: 0 13px;
     font-size: 14px;
 }
 
@@ -61,13 +63,7 @@ a {
     background-color: lightgray !important;
 }
 
-.user-icons {
-    margin-left: 5px;
-}
 
-.user-icons a {
-    margin: 0 10px;
-}
 
 #search {
     width: 100%;
@@ -75,7 +71,7 @@ a {
 
 .dropdown-item:focus,
 .dropdown-item:hover {
-    width: 90%;
+    width: 100%;
 }
 
 
