@@ -162,7 +162,7 @@
 
                     <br>
                     <div class="col text-center mb-3">
-                        <a href="/php/cart/add_cart.php?id=<?php echo $_GET['product'] ?>" class="btn btn-danger" id="buy-btn">Thêm vào giỏ hàng</a>
+                        <button type="button" onclick="addProductToCart(<?php echo $_GET['product'] ?>)" class="btn btn-danger" id="buy-btn">Thêm vào giỏ hàng</button>
                     </div>
                     <div class="col product-desc">
                         <h5>Mô tả:</h5>
@@ -289,6 +289,33 @@
         //Change <title> tag into product name
         let productName = document.querySelector('.product-name').innerText;
         document.title = productName;
+    </script>
+    <script>
+        function addProductToCart(product) {
+            $(document).ready(function() {
+                $.ajax({
+                    url: "/php/cart/addProduct.php?id=" + product,
+                    type: "POST",
+                    success: function(response) {
+                        if (response.message == "success") {
+                            let toastHTML =
+                            `<div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="d-flex">
+                                <div class="toast-body">
+                                Thêm sản phẩm vào giỏ hàng thành công.
+                                </div>
+                                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                </div>
+                            </div>`;
+                            //Create a div container to hold the toast
+                            let toastContainer = document.createElement('div');
+                            toastContainer.innerHTML = toastHTML;
+                            document.body.appendChild(toastContainer);
+                        } 
+                    }
+                });
+            })
+        }
     </script>
     <!-- End of extra script -->
 </body>

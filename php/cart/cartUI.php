@@ -84,17 +84,19 @@ if (!$db_connect) {
         <!-- End of Header -->
         <div class="wrapper col-12 d-flex flex-column justify-content-center ">
             <!-- Product information -->
-            <div class="row d-flex justify-content-center align-items-center mt-4 mb-1 mx-auto column-bg-white">
+            <div class="row d-flex justify-content-center align-items-center mt-4 mb-3 mx-auto column-bg-white">
 
                 <?php
                 if (count($productList) == 0) {
                     echo '<h6 class="my-3 text-center">Giỏ hàng của bạn đang trống.</h6>';
                 } else {
+                    echo '<h6 class="my-3 justify-content-between fw-bold">Danh sách sản phẩm</h6>';
                     for ($i = 0; $i < count($productList); $i++) {
                         echo
-                        '<div class="row justify-content-between image-and-infor-product mb-3">
+                        '<button type="button" onclick="removeProductInCart(' . $i . ',\'' . $productList[$i]['id'] . '\')" class="btn-close btn-close-white remove-product-btn"></button>
+                        <div class="row justify-content-between cart-item mb-3">
                         <div class="col-7 d-flex flex-row justify-content-evenly align-items-center px-0">
-                        <img class="product-img" src="' . $productList[$i]['thumbnail'] . ($tableList[$i] == 'accessory' ? '' : '_' . explode(',', $productList[$i]['color'])[0]) . '.png" style="width:125px;height:125px;" alt="' . $productList[$i]['productName'] . '">
+                        <img class="product-img" src="' . $productList[$i]['thumbnail'] . ($colorList[$i] == 'white' ? '' : '_' . explode(',', $productList[$i]['color'])[0]) . '.png" style="width:125px;height:125px;" alt="' . $productList[$i]['productName'] . '">
                             <div class="d-flex flex-column">
                                 <div class="col-12">
                                     <p class="detail-product" style="font-size: 18px; font-weight: bold;">';
@@ -106,11 +108,11 @@ if (!$db_connect) {
                         $colors = array();
                         $colors = explode(",", $productList[$i]['color']);
                         echo '</p>
-                                        <p class="detail-product mb-0">Chọn màu</p>
+                                        <p class="product-detail mb-0">Chọn màu</p>
                                         <div class="dropdown">';
                         /* Disable toggle dropdown if product only has 1 color */
                         echo '<button class="btn btn-secondary dropdown-toggle" type="button" 
-                                                data-bs-toggle="dropdown" aria-expanded="false" id="dropdown' . $i . '"' . ($tableList[$i] == 'accessory' ? 'disabled' : '') . '>';
+                                                data-bs-toggle="dropdown" aria-expanded="false" id="dropdown' . $i . '"' . ($colorList[$i] == 'white' ? 'disabled' : '') . '>';
                         echo ucfirst($colors[0]);
                         echo '</button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdown' . $i . '">';
@@ -132,7 +134,7 @@ if (!$db_connect) {
                                 <button class="btn btn-outline-secondary inc-btn" type="button" onclick="updateCart(\''.$i.'\',\'' . $productList[$i]['id'] . '\', \'inc\')">+</button>
                             </div>
                         </div>
-                        </div><hr>';
+                        </div>';
                     
                     }
                 }
@@ -347,10 +349,38 @@ if (!$db_connect) {
             });
         }
         function formatPrice(price) {
-            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            const formatter = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+            });
+            return formatter.format(price).replace('₫', '').trim();
+        }
+
+        // function formatPrice(price) {
+        //     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        // }
+    </script>
+    <script>
+        function removeProductInCart(index, product) {
+            $(document).ready(function() {
+                $.ajax({
+                    url: '/php/cart/removeProduct.php?id=' + product,
+                    type: 'GET',
+                    success: function(response) {
+                        alert('Xóa sản phẩm thành công');
+                        let cartItem = document.querySelectorAll('.cart-item')[index];
+                        cartItem.remove();
+                        let removeBtn = document.querySelectorAll('.remove-product-btn')[index];
+                        removeBtn.remove();
+                        //Reload page if cart is empty
+                        if (document.querySelectorAll('.cart-item').length === 0) {
+                            location.reload();
+                        }
+                    }
+                });
+            });
         }
     </script>
-
 
 </body>
 

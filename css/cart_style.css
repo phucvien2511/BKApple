@@ -33,13 +33,14 @@
     font-size: 12px;
 }
 
-/* -- Information Product -- */
-.image-and-infor-product {
-    margin-top: 15px;
+/* -- Product information -- */
+
+.cart-item {
+    margin-top: 5px;
     align-items: center;
 }
 
-.detail-product {
+.product-detail {
     font-size: 15px;
 }
 
@@ -47,6 +48,8 @@
     font-size: 18px;
     margin-top: 15px;
 }
+
+
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

@@ -12,10 +12,12 @@ if (!$db_connect) {
 session_start();
 //Check url paramater
 $id = $_GET['id'];
-$name_query = "INSERT INTO cart (customerId, productId, quantity) VALUES ('{$_SESSION['user_login']}', '$id', '1');";
+$name_query = "DELETE FROM cart WHERE customerId = '{$_SESSION['user_login']}' AND productId = '{$id}';";
 // Execute query to insert data into cart table
 mysqli_query($db_connect, $name_query);
 // Redirect to the previous page
-echo '<script>alert("Added to cart successfully!")</script>';
-echo "<script> window.history.back(); </script>";
+$response = array(
+    'message' => 'Product removed from cart!'
+);
+echo json_encode($response);
 ?>

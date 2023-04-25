@@ -30,8 +30,27 @@
     </div>
     <div class="col-sm-1 d-flex flex-row align-items-center justify-content-end user-icons">
         <?php
+        
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $db = "applestore";
+        //Connect to database
+        $db_connect = mysqli_connect($servername, $username, $password, $db);
+        //Check connection
+        if (!$db_connect) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
         session_start();
+        //check if user is logged in
+            
+        //Count number of items in cart
+            
         if (isset($_SESSION['user_login'])) {
+            $cart_query = "SELECT COUNT(*) FROM cart WHERE customerId = '{$_SESSION['user_login']}';";
+            $cart_result = mysqli_query($db_connect, $cart_query);
+            $cart_row = mysqli_fetch_array($cart_result);
+            $cart_count = $cart_row[0];
             echo '<div class="dropdown">
                     <a class="btn btn-sm dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <span><img src="' . $_SESSION['user_avatar'] . '" alt="User avatar" style="width: 35px; height: 35px; border-radius: 50%;"></span>
@@ -42,7 +61,7 @@
                 echo '<li><a class="dropdown-item" href="/php/admin/viewProductList.php">Trang Admin</a></li>';
             }
             echo '<li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
-                        <li><a class="dropdown-item" href="/php/cart/cartUI.php">Giỏ hàng</a></li>
+                        <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="/php/cart/cartUI.php">Giỏ hàng<span class="badge bg-dark">'.$cart_count.'</span></a></li>
                         <li><a class="dropdown-item" href="/php/logout.php">Đăng xuất</a></li> 
                     </ul>
                 </div>';
