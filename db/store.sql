@@ -16,7 +16,7 @@ USE `AppleStore`;
 CREATE TABLE user (
   id INT NOT NULL UNIQUE AUTO_INCREMENT,
   role VARCHAR(5) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'user',
-  username CHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL UNIQUE,
+  username VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL UNIQUE,
   password CHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   name VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   avatar text NOT NULL DEFAULT 'https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg',
@@ -263,6 +263,7 @@ CREATE TABLE orders (
   orderId INT NOT NULL AUTO_INCREMENT,
   customerId INT NOT NULL,
   address text,
+  mail text,
   note text,
   PRIMARY KEY (orderId, customerId),
   FOREIGN KEY (customerId) REFERENCES user (id)
@@ -290,11 +291,11 @@ CREATE TABLE order_product (
 -- Table structure for table `cart`
 --
 CREATE TABLE cart (
-  customerId INT NOT NULL,
+  customerId VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   productId VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   quantity INT NOT NULL DEFAULT 1,
-  PRIMARY KEY (customerId, productId),
-  FOREIGN KEY (customerId) REFERENCES user (id)
+  PRIMARY KEY (productId),
+  FOREIGN KEY (customerId) REFERENCES user (username)
     ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (productId) REFERENCES product (id)
     ON DELETE CASCADE ON UPDATE CASCADE

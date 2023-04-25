@@ -57,7 +57,7 @@
         }
         $classify = $rows['classify'];
         $name = $rows['productName'];
-        $price = number_format($rows['price'], 0, '.', '.') . 'đ';;
+        $price = number_format($rows['price'], 0, '.', '.') . 'đ';
         $colors = explode(',', $rows['color']);
         $thumbnail = $rows['thumbnail'];
         switch ($table_result) {
@@ -152,7 +152,9 @@
                     <h6 class="text-md-start text-center choose-color-title">Chọn màu: <?php echo $colors[0]; ?></h6>
                     <div class=" d-flex flex-row align-items-center justify-content-center justify-content-md-start choose-color">
                         <?php
+                        $selected_color = $colors[0];
                         foreach ($colors as $color) {
+
                             echo '<a href="#" class="color-card-round color-card" style="background-color: ' . $color . '" onclick="changeSliderImage(\'' . $thumbnail . '\', \'' . $color . '\')"></a>';
                         }
                         ?>
@@ -160,7 +162,7 @@
 
                     <br>
                     <div class="col text-center mb-3">
-                        <a href="#" class="btn btn-danger" id="buy-btn">Thêm vào giỏ hàng</a>
+                        <a href="/php/cart/add_cart.php?id=<?php echo $_GET['product'] ?>" class="btn btn-danger" id="buy-btn">Thêm vào giỏ hàng</a>
                     </div>
                     <div class="col product-desc">
                         <h5>Mô tả:</h5>
@@ -265,7 +267,6 @@
     <!-- Extra script to change background images when choose color -->
     <script>
         //Change the background color of memory-card into white after click
-
         function changeSliderImage(thumbnail, color) {
             //Change big images
             let carouselActiveItem = document.querySelector('.carousel-item.active img');

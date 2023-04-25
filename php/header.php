@@ -42,7 +42,7 @@
                 echo '<li><a class="dropdown-item" href="/php/admin/viewProductList.php">Trang Admin</a></li>';
             }
             echo '<li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
-                        <li><a class="dropdown-item" href="#">Giỏ hàng</a></li>
+                        <li><a class="dropdown-item" href="/php/cart/cartUI.php">Giỏ hàng</a></li>
                         <li><a class="dropdown-item" href="/php/logout.php">Đăng xuất</a></li> 
                     </ul>
                 </div>';
@@ -53,3 +53,8 @@
 
     </div>
 </div>
+<style>
+    .container-fluid {
+        padding: 0 !important;
+    }
+</style>

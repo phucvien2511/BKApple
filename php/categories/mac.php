@@ -33,12 +33,12 @@
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
             </div>
             <div class="carousel-inner">
-                <div class="carousel-item active">
+                <a class="carousel-item active">
                     <img src="/images/mac/banner1.png" class="d-block w-100" alt="Banner 1">
-                </div>
-                <div class="carousel-item">
+                </a>
+                <a class="carousel-item" href="/php/categories/mac.php?classify=imac">
                     <img src="/images/mac/banner2.png" class="d-block w-100" alt="Banner 2">
-                </div>
+                </a>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>

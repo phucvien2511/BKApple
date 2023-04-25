@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/header.css">
+
 </head>
 
 <body>
@@ -45,19 +46,19 @@
             <!-- End of Slider -->
             <div class="row d-flex flex-row align-items-center justify-content-center">
                 <div class="d-flex flex-column align-items-center justify-content-center col-6 col-sm-4 col-md-2 top-card">
-                    <a href="/php/iphone.php" class="text-decoration-none">
+                    <a href="/php/categories/iphone.php" class="text-decoration-none">
                         <img src="images/landingPage/img-cateiphone-1.webp" alt="iPhone" class="top-card-img">
                         <h5 class="white text-center">iPhone</h5>
                     </a>
                 </div>
                 <div class="d-flex flex-column align-items-center justify-content-center col-6 col-sm-4 col-md-2 top-card">
-                    <a href="/php/ipad.php" class="text-decoration-none">
+                    <a href="/php/categories/ipad.php" class="text-decoration-none">
                         <img src="images/landingPage/img-cateipad.webp" alt="iPad" class="top-card-img">
                         <h5 class="white text-center">iPad</h5>
                     </a>
                 </div>
                 <div class="d-flex flex-column align-items-center justify-content-center col-6 col-sm-4 col-md-2 top-card">
-                    <a href="/php/mac.php" class="text-decoration-none">
+                    <a href="/php/categories/mac.php" class="text-decoration-none">
                         <img src="images/landingPage/img-catemac-1.webp" alt="Mac" class="top-card-img">
                         <h5 class="white text-center">Mac</h5>
                     </a>
@@ -69,13 +70,13 @@
                     </a>
                 </div>
                 <div class="d-flex flex-column align-items-center justify-content-center col-6 col-sm-4 col-md-2 top-card">
-                    <a href="/php/sound.php" class="text-decoration-none">
+                    <a href="/php/categories/sound.php" class="text-decoration-none">
                         <img src="images/landingPage/img-catesound.webp" alt="Âm thanh" class="top-card-img">
                         <h5 class="white text-center">Âm thanh</h5>
                     </a>
                 </div>
                 <div class="d-flex flex-column align-items-center justify-content-center col-6 col-sm-4 col-md-2 top-card">
-                    <a href="/php/accessory.php" class="text-decoration-none">
+                    <a href="/php/categories/accessory.php" class="text-decoration-none">
                         <img src="images/landingPage/img-catephukien.webp" alt="Phụ kiện" class="top-card-img">
                         <h5 class="white text-center">Phụ kiện</h5>
                     </a>
