@@ -1,0 +1,37 @@
+.customer-info p {
+    font-size: 1.5rem;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+
+.customer-info {
+    flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 600px) {
+    .btn-primary {
+        position: absolute;
+        margin-top: 10px;
+        left: 20%;
+        right: 25%; 
+    }
+}
+
+
+@media only screen and (min-width: 600px) and (max-width: 779px) {
+    .btn-primary {
+        position: absolute;
+        margin-top: 10px;
+        left: 30%;
+        right: 30%; 
+    }
+}
+
+@media only screen and (min-width: 780px) {
+    .btn-primary {
+        position: absolute;
+        margin-top: 10px;
+        left: 40%;
+        right: 30%; 
+    }
+}
