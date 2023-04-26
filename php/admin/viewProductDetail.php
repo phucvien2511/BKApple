@@ -266,41 +266,6 @@ $description = $rows['description'];
                     <?php echo "<p>{$description}</p>"; ?>
                 </div>
 
-                <div class="row">
-                    <h2>Đánh giá của khách hàng</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Tên khách hàng</th>
-                                <th scope="col">Bình luận</th>
-                                <th scope="col">Đánh giá</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $name_query = "SELECT * FROM review, user WHERE review.customerId = user.id and review.productId = '$product_id';";
-                            $result = mysqli_query($db_connect, $name_query);
-
-                            $number_of_product = mysqli_num_rows($result);
-                            if ($number_of_product == 0) {
-                                echo "<tr>";
-                                echo "<td colspan='3'>Không có bình luận / Đánh giá</td>";
-                                echo "</tr>";
-                            }
-
-                            while ($rows = mysqli_fetch_assoc($result)) {
-                                echo "<tr>";
-                                echo "<th scope='row'>{$rows["name"]}</th>";
-                                echo "<td>{$rows["comment"]}</td>";
-                                echo "<td><span class='material-symbols-outlined'>";
-                                for ($rate_star = 0; $rate_star < $rows['rate']; $rate_star++) echo "star ";
-                                echo "</span></td>";
-                                echo "</tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
     </div>

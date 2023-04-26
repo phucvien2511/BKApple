@@ -181,38 +181,38 @@ if (!$db_connect) {
     <script>
         let onlineShipHTML =
             `<p class="fw-bold">Thông tin khách hàng</p>
-                <form>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="name" placeholder="Họ và tên" value="<?php echo $user['name']; ?>" required>
-                        <label for="name" style="color: grey;">Họ và tên</label>
-                    </div>
-                    <div class="form-floating my-3">
-                        <input type="text" class="form-control" id="phone" placeholder="Số điện thoại" value="<?php echo $user['phone']; ?>" required>
-                        <label for="phone" style="color: grey;">Số điện thoại</label>
-                    </div>
-                    <div class="form-floating my-3">
-                        <input type="text" class="form-control" id="phone" placeholder="Mail (Ví dụ: example@gmail.com)" value="<?php echo $user['mail']; ?>" required>
-                        <label for="phone" style="color: grey;">Mail</label>
-                    </div>
-                    <div class="form-floating my-3">
-                        <input type="text" class="form-control" id="phone" placeholder="Địa chỉ (Ví dụ: 268 Lý Thường Kiệt, Phường 14, Quận 10, TP.HCM" value="<?php echo $user['address']; ?>" required>
-                        <label for="phone" style="color: grey;">Địa chỉ giao hàng</label>
-                    </div>
-                    <div class="form-floating my-3">
-                        <textarea class="form-control" placeholder="Ghi chú thêm" id="notes"></textarea>
-                        <label for="notes" style="color: grey;">Ghi chú thêm (nếu có)</label>
-                    </div>
-                    <div class="form-floating my-3">
-                        <textarea class="form-control" placeholder="Mã khuyến mãi" id="voucher"></textarea>
-                        <label for="voucher" style="color: grey;">Mã khuyến mãi (nếu có)</label>
-                    </div>
-                    <div style="color: gold; font-style: italic; font-size: 15px;" class="mb-3">*Quý khách vui lòng kiểm tra kỹ thông tin trước khi đặt hàng.</div>
-                    <div class="d-flex flex-row justify-content-between">
-                        <p class="fw-bold">Tổng:</p>
-                        <p class="fw-bold" id="total-price"><?php echo number_format($total_price, 0, '.', '.') . 'đ'; ?></p>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Đặt hàng</button>
-                </form>`;
+            <form method="post" action="addOrder.php?ship=1">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Họ và tên" value="<?php echo $user['name']; ?>" required>
+                    <label for="name" style="color: grey;">Họ và tên</label>
+                </div>
+                <div class="form-floating my-3">
+                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Số điện thoại" value="<?php echo $user['phone']; ?>" required>
+                    <label for="phone" style="color: grey;">Số điện thoại</label>
+                </div>
+                <div class="form-floating my-3">
+                    <input type="text" class="form-control" id="mail" name="mail" placeholder="Mail (Ví dụ: example@gmail.com)" value="<?php echo $user['mail']; ?>" required>
+                    <label for="mail" style="color: grey;">Mail</label>
+                </div>
+                <div class="form-floating my-3">
+                    <input type="text" class="form-control" id="address" name="address" placeholder="Địa chỉ (Ví dụ: 268 Lý Thường Kiệt, Phường 14, Quận 10, TP.HCM" value="<?php echo $user['address']; ?>" required>
+                    <label for="address" style="color: grey;">Địa chỉ giao hàng</label>
+                </div>
+                <div class="form-floating my-3">
+                    <textarea class="form-control" placeholder="Ghi chú thêm" id="note" name="note"></textarea>
+                    <label for="note" style="color: grey;">Ghi chú thêm (nếu có)</label>
+                </div>
+                <div class="form-floating my-3">
+                    <textarea class="form-control" placeholder="Mã khuyến mãi" id="voucher" name="voucher"></textarea>
+                    <label for="voucher" style="color: grey;">Mã khuyến mãi (nếu có)</label>
+                </div>
+                <div style="color: gold; font-style: italic; font-size: 15px;" class="mb-3">*Quý khách vui lòng kiểm tra kỹ thông tin trước khi đặt hàng.</div>
+                <div class="d-flex flex-row justify-content-between">
+                    <p class="fw-bold">Tổng:</p>
+                    <p class="fw-bold" id="total-price"><?php echo number_format($total_price, 0, '.', '.') . 'đ'; ?></p>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Đặt hàng</button>
+            </form>`;
         if (document.getElementById('onlineShip').checked) {
             document.getElementById('customer-info').innerHTML = onlineShipHTML;
         }
@@ -221,7 +221,7 @@ if (!$db_connect) {
         });
         document.getElementById('offlineShip').addEventListener('click', function() {
             document.getElementById('customer-info').innerHTML =
-                `<form action="add_order.php" method="post">
+                `<form method="post" action="addOrder.php?ship=0">
                     <p class="fw-bold">Thông tin khách hàng</p>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="name" placeholder="Họ và tên" value="<?php echo $user['name']; ?>" required>
@@ -232,8 +232,8 @@ if (!$db_connect) {
                         <label for="phone" style="color: grey;">Số điện thoại</label>
                     </div>
                     <div class="form-floating my-3">
-                        <input type="text" class="form-control" id="phone" placeholder="Mail (Ví dụ: example@gmail.com)" value="<?php echo $user['mail']; ?>" required>
-                        <label for="phone" style="color: grey;">Mail</label>
+                        <input type="text" class="form-control" id="mail" placeholder="Mail (Ví dụ: example@gmail.com)" value="<?php echo $user['mail']; ?>" required>
+                        <label for="mail" style="color: grey;">Mail</label>
                     </div>
                     <div class="form-floating mt-3 mb-1">
                         <select class="form-select" id="storeSelect" aria-label="Cửa hàng" style="width: 100%" required>

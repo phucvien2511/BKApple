@@ -62,6 +62,7 @@
             }
             echo '<li><a class="dropdown-item" href="/php/information.php">Thông tin cá nhân</a></li>
                         <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="/php/cart/cartUI.php">Giỏ hàng<span class="badge bg-dark cart-count">'.$cart_count.'</span></a></li>
+                        <li><a class="dropdown-item" href="/php/cart/orderUI.php">Xem đơn hàng</a></li> 
                         <li><a class="dropdown-item" href="/php/logout.php">Đăng xuất</a></li> 
                     </ul>
                 </div>';

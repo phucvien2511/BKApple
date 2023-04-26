@@ -162,11 +162,14 @@
         <!-- Footer -->
         <?php include "../footer.php" ?>
     </div>
-    </div>
     <script src="/js/bootstrap.bundle.min.js"></script>
-
-    <!--Script for Slider-->
     <script src="/js/jquery-3.6.1.min.js"></script>
+    <style>
+        .navbar-nav a.active {
+            background-color: grey !important;
+            color: white !important;
+        }
+    </style>
 </body>
 
 </html>

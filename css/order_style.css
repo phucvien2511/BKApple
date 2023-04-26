@@ -1,0 +1,142 @@
+/* -------------------- BODY -------------------- */
+
+.wrapper {
+    width: 100%;
+}
+
+.column-bg-white {
+    background-color: #505050;
+    border-radius: 10px;
+    width: 80%;
+}
+
+@media only screen and (max-width: 960px) {
+    .column-bg-white {
+        background-color: #505050;
+        border-radius: 10px;
+        width: 95%;
+    }
+}
+
+.bold-text {
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 0;
+}
+
+/* -- Description Feature -- */
+.description-feature {
+    margin-top: 30px;
+}
+
+.description-feature-text {
+    font-size: 12px;
+}
+
+/* -- Product information -- */
+
+.cart-item {
+    margin-top: 5px;
+    align-items: center;
+}
+
+.product-detail {
+    font-size: 15px;
+}
+
+.pay-price {
+    font-size: 18px;
+    margin-top: 15px;
+}
+
+
+/* Quantity buttons */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Works for Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+
+/* Drop down */
+.image-dropdown {
+    width: 17px;
+}
+
+.btn-dropdown {
+    background-color: white;
+    color: black;
+    padding: 7px;
+    font-size: 15px;
+    border: 1px solid rgb(187, 179, 179);
+    border-radius: 10px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropItem {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    border: 2px solid white;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.dropItem a {
+    color: black;
+    font-size: 15px;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.show-drop-item {
+    display: block;
+}
+
+/* End Drop down */
+
+/* Information Customer */
+.information-customer {
+    margin-top: 5px;
+}
+
+.form-information {
+    width: 47%;
+    margin: 5px;
+}
+
+.total-price {
+    margin-top: 15px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+.btn-buy {
+    width: 100%;
+    font-size: 15px;
+}
+
+/* Add space between columns of .order-table */
+.order-table {
+    width: 95%;
+    align-self: center;
+}
+.order-table th, td {
+    padding: 5px;
+}
+.order-table tr:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+}

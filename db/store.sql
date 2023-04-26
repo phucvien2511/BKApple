@@ -261,12 +261,15 @@ INSERT INTO `accessory` (`id`, `classify`) VALUES
 --
 CREATE TABLE orders (
   orderId INT NOT NULL AUTO_INCREMENT,
-  customerId INT NOT NULL,
+  date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  customerId VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   address text,
+  phone CHAR(12) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   mail text,
   note text,
+  status VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Chưa xác nhận',
   PRIMARY KEY (orderId, customerId),
-  FOREIGN KEY (customerId) REFERENCES user (id)
+  FOREIGN KEY (customerId) REFERENCES user (username)
     ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -274,14 +277,14 @@ CREATE TABLE orders (
 -- Table structure for table `orders_products`
 --
 CREATE TABLE order_product (
-  orderId INT NOT NULL,
-  customerId INT NOT NULL,
+  orderId INT NOT NULL AUTO_INCREMENT,
+  customerId VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   productId VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   quantity INT NOT NULL DEFAULT 1,
   PRIMARY KEY (orderId, customerId, productId),
   FOREIGN KEY (orderId) REFERENCES orders (orderId)
     ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (customerId) REFERENCES user (id)
+  FOREIGN KEY (customerId) REFERENCES user (username)
     ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (productId) REFERENCES product (id)
     ON DELETE CASCADE ON UPDATE CASCADE

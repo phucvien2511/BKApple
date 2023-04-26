@@ -124,7 +124,24 @@
             } else {
                 $name_query = "SELECT product.* FROM product JOIN ipad ON product.id = ipad.id";
             }
-            $result = mysqli_query($db_connect, $name_query);
+            if (isset($_GET['sort'])) {
+                $sort_option = $_GET['sort'];
+                if ($sort_option == 'asc') {
+                    //Sort $result by price ascending
+                    $result = mysqli_query($db_connect, $name_query . " ORDER BY price ASC");
+                } else if ($sort_option == 'dsc') {
+                    //Sort $result by price descending
+                    $result = mysqli_query($db_connect, $name_query . " ORDER BY price DESC");
+                } else if ($sort_option == 'date') {
+                    //Sort $result by date descending
+                    $result = mysqli_query($db_connect, $name_query . " ORDER BY releaseDate DESC");
+                } else if ($sort_option == 'fav') {
+                    //Sort $result by favorite descending
+                    $result = mysqli_query($db_connect, $name_query . " ORDER BY sold DESC");
+                }
+            } else {
+                $result = mysqli_query($db_connect, $name_query);
+            }
             $num_rows = mysqli_num_rows($result);
             if ($num_rows <= 0) {
                 echo '<h1 class="white text-center mb-5 mt-5">Không tìm thấy sản phẩm nào</h1>';
