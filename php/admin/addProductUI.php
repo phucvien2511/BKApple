@@ -100,6 +100,7 @@
                                         <option value="purple">Tím</option>
                                         <option value="silver">Bạc</option>
                                         <option value="gray">Xám</option>
+                                        <option value="grey">Xám nhạt</option>
                                         <option value="white">Trắng</option>
                                     </select>
                                 </div>
@@ -136,6 +137,7 @@
                                         <option value="purple">Tím</option>
                                         <option value="silver">Bạc</option>
                                         <option value="gray">Xám</option>
+                                        <option value="grey">Xám nhạt</option>
                                         <option value="white">Trắng</option>
                                     </select>
                                 </div>
@@ -166,6 +168,7 @@
                                         <option value="purple">Tím</option>
                                         <option value="silver">Bạc</option>
                                         <option value="gray">Xám</option>
+                                        <option value="grey">Xám nhạt</option>
                                         <option value="white">Trắng</option>
                                     </select>
                                 </div>
@@ -207,7 +210,7 @@
 
                                 <div class="col form-floating">
                                     <select class="form-select" name="versionIPhone" id="versionIPhone" aria-label="versionIPhone">
-                                        <option value="None" Selected>Phổ thông</option>
+                                        <option value="" Selected>Phổ thông</option>
                                         <option value="pro">Pro</option>
                                         <option value="promax">Pro Max</option>
                                         <option value="plus">Plus</option>
@@ -232,8 +235,8 @@
                                     <select class="form-select" name="classifyIPad" id="classifyIPad" aria-label="classifyIPad">
                                         <option value="air" Selected>Air</option>
                                         <option value="mini">Mini</option>
-                                        <option value="prom1">Pro M1</option>
-                                        <option value="prom12">Pro M2</option>
+                                        <option value="pro-m1">Pro M1</option>
+                                        <option value="pro-m2">Pro M2</option>
                                     </select>
                                     <label for="classifyIPad">Phân loại iPad</label>
                                 </div>
@@ -262,8 +265,8 @@
 
                                 <div class="col form-floating">
                                     <select class="form-select" name="capacityMac" id="capacityMac" aria-label="capacityMac">
-                                        <option value="6256" Selected>RAM 8GB - SSD 256GB</option>
-                                        <option value="16512">RAM 16GB - SSD 512GB</option>
+                                        <option value="RAM 8GB - SSD 256GB" Selected>RAM 8GB - SSD 256GB</option>
+                                        <option value="RAM 16GB - SSD 512GB">RAM 16GB - SSD 512GB</option>
                                     </select>
                                     <label for="capacityMac">Dung lượng bộ nhớ</label>
                                 </div>

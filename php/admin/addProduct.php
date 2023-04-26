@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $message = 'Giá trị Id không được để trống';
 
         echo "<SCRIPT> 
-                window.location.replace('addProduct.php');
+                window.location.replace('addProductUI.php');
                 alert('$message')
             </SCRIPT>";
         exit();
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $message = 'Giá trị tên sản phẩm không được để trống';
 
         echo "<SCRIPT> 
-                window.location.replace('addProduct.php');
+                window.location.replace('addProductUI.php');
                 alert('$message')
             </SCRIPT>";
         exit();
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $message = 'Giá trị giá tiền không được để trống';
 
         echo "<SCRIPT> 
-                window.location.replace('addProduct.php');
+                window.location.replace('addProductUI.php');
                 alert('$message')
             </SCRIPT>";
         exit();
@@ -89,24 +89,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $defaultColorPath = "";
     $thumbnail_path = "";
+    $img_id = $id;
+    $img_id = strtolower($img_id); //Change id to lower case
 
     if ($productType == "iphone") {
-        $defaultColorPath = "/images/{$productType}/{$classify}/{$id}";
+        $img_id = explode("_", $img_id)[0]; //Remove the capacity out of img path
+        $defaultColorPath = "/images/{$productType}/{$classify}/{$img_id}";
         $thumbnail_path = "/images/{$productType}/{$classify}/";
     } else if ($productType == "ipad") {
-        $defaultColorPath = "/images/{$productType}/{$classify}/{$id}";
+        //ID: IPADPROM1_11_C
+
+        $img_id_name = explode("_", $img_id)[0]; //Get the name = ipadprom1
+        $img_id_classify = substr($img_id_name, 4); //Get the classify = prom1
+        $img_id_size = explode("_", $img_id)[1]; //Get the screen size = 11
+        $img_id_type = explode("_", $img_id)[2]; //Get the type = c
+        if ($img_id_type == 'c') {
+            $img_id_type = '_cellular';
+        }
+        $img_id = $img_id_classify . '_' . $img_id_size . $img_id_type; //Change the id to the correct format
+        $defaultColorPath = "/images/{$productType}/{$classify}/{$img_id}";
         $thumbnail_path = "/images/{$productType}/{$classify}/";
     } else if ($productType == "mac") {
-        $defaultColorPath = "/images/{$productType}/{$id}";
+        $img_id_size = explode("_", $img_id)[1]; //Get the screen size
+        $img_id_classify = substr(explode("_", $img_id)[0], 3); //Get the classify
+        $img_id = "mac" . $img_id_size . "_" . $img_id_classify; //Change the id to the correct format
+        $defaultColorPath = "/images/{$productType}/{$img_id}";
         $thumbnail_path = "/images/{$productType}/";
     } else if ($productType == "watch") {
-        $defaultColorPath = "/images/{$productType}/{$id}";
+        $defaultColorPath = "/images/{$productType}/{$img_id}";
         $thumbnail_path = "/images/{$productType}/";
     } else if ($productType == "sound") {
-        $defaultColorPath = "/images/{$productType}/{$classify}/{$id}";
+        $defaultColorPath = "/images/{$productType}/{$classify}/{$img_id}";
         $thumbnail_path = "/images/{$productType}/{$classify}/";
     } else if ($productType == "accessory") {
-        $defaultColorPath = "/images/{$productType}/{$classify}/{$id}";
+        $defaultColorPath = "/images/{$productType}/{$classify}/{$img_id}";
         $thumbnail_path = "/images/{$productType}/{$classify}/";
     }
 } else {
@@ -120,7 +136,7 @@ if (!isset($_FILES['defaultColorthumbnail'])) {
     $message = 'Không tìm thấy ảnh';
 
     echo "<SCRIPT> 
-            window.location.replace('addProduct.php');
+            window.location.replace('addProductUI.php');
             alert('$message')
         </SCRIPT>";
     exit();
@@ -130,7 +146,7 @@ if ($_FILES['defaultColorthumbnail']['type'] != 'image/png') {
     $message = 'Chỉ hỗ trợ định dạng PNG';
 
     echo "<SCRIPT> 
-            window.location.replace('addProduct.php');
+            window.location.replace('addProductUI.php');
             alert('$message')
         </SCRIPT>";
     exit();
@@ -140,13 +156,13 @@ if ($_FILES['defaultColorthumbnail']['error']) {
     $message = 'Xảy ra lỗi khi cập nhật hình ảnh';
 
     echo "<SCRIPT> 
-            window.location.replace('addProduct.php');
+            window.location.replace('addProductUI.php');
             alert('$message')
         </SCRIPT>";
     exit();
 }
 
-move_uploaded_file($_FILES['defaultColorthumbnail']['tmp_name'], "..$thumbnail_path" . $_FILES['defaultColorthumbnail']['name']);
+move_uploaded_file($_FILES['defaultColorthumbnail']['tmp_name'], "$thumbnail_path" . $_FILES['defaultColorthumbnail']['name']);
 
 if (isset($_FILES['defaultColorpicture'])) {
     $countfiles = count($_FILES['defaultColorpicture']['name']);
@@ -156,7 +172,7 @@ if (isset($_FILES['defaultColorpicture'])) {
             $message = 'Chỉ hỗ trợ định dạng PNG';
 
             echo "<SCRIPT> 
-                    window.location.replace('addProduct.php');
+                    window.location.replace('addProductUI.php');
                     alert('$message')
                 </SCRIPT>";
             exit();
@@ -166,7 +182,7 @@ if (isset($_FILES['defaultColorpicture'])) {
             $message = 'Xảy ra lỗi khi cập nhật hình ảnh';
 
             echo "<SCRIPT> 
-                    window.location.replace('addProduct.php');
+                    window.location.replace('addProductUI.php');
                     alert('$message')
                 </SCRIPT>";
             exit();
@@ -181,7 +197,7 @@ if ($colorNumber > 1) {
         $message = 'Không tìm thấy ảnh';
 
         echo "<SCRIPT> 
-                window.location.replace('addProduct.php');
+                window.location.replace('addProductUI.php');
                 alert('$message')
             </SCRIPT>";
         exit();
@@ -191,7 +207,7 @@ if ($colorNumber > 1) {
         $message = 'Chỉ hỗ trợ định dạng PNG';
 
         echo "<SCRIPT> 
-                window.location.replace('addProduct.php');
+                window.location.replace('addProductUI.php');
                 alert('$message')
             </SCRIPT>";
         exit();
@@ -207,7 +223,7 @@ if ($colorNumber > 1) {
                 $message = 'Chỉ hỗ trợ định dạng PNG. Vui lòng thêm ảnh PNG vào. Không cho phép không được để trống';
 
                 echo "<SCRIPT> 
-                        window.location.replace('addProduct.php');
+                        window.location.replace('addProductUI.php');
                         alert('$message')
                     </SCRIPT>";
                 exit();
@@ -217,7 +233,7 @@ if ($colorNumber > 1) {
                 $message = 'Xảy ra lỗi khi cập nhật hình ảnh';
 
                 echo "<SCRIPT> 
-                        window.location.replace('addProduct.php');
+                        window.location.replace('addProductUI.php');
                         alert('$message')
                     </SCRIPT>";
                 exit();
@@ -233,7 +249,7 @@ if ($colorNumber > 2) {
         $message = 'Không tìm tháy ảnh';
 
         echo "<SCRIPT> 
-                window.location.replace('addProduct.php');
+                window.location.replace('addProductUI.php');
                 alert('$message')
             </SCRIPT>";
         exit();
@@ -243,7 +259,7 @@ if ($colorNumber > 2) {
         $message = 'Chỉ hỗ trợ định dạng PNG';
 
         echo "<SCRIPT> 
-                window.location.replace('addProduct.php');
+                window.location.replace('addProductUI.php');
                 alert('$message')
             </SCRIPT>";
         exit();
@@ -259,7 +275,7 @@ if ($colorNumber > 2) {
                 $message = 'Chỉ hỗ trợ định dạng PNG. Vui lòng thêm ảnh PNG vào. Không cho phép không được để trống';
 
                 echo "<SCRIPT> 
-                        window.location.replace('addProduct.php');
+                        window.location.replace('addProductUI.php');
                         alert('$message')
                     </SCRIPT>";
                 exit();
@@ -269,7 +285,7 @@ if ($colorNumber > 2) {
                 $message = 'Xảy ra lỗi khi cập nhật hình ảnh';
 
                 echo "<SCRIPT> 
-                        window.location.replace('addProduct.php');
+                        window.location.replace('addProductUI.php');
                         alert('$message')
                     </SCRIPT>";
                 exit();
@@ -312,7 +328,7 @@ if ($stmt = mysqli_prepare($db_connect, $name_query)) {
         $message = 'Giá trị ID đã tồn tại';
 
         echo "<SCRIPT> //not showing me this
-                window.location.replace('addProduct.php');
+                window.location.replace('addProductUI.php');
                 alert('$message')
             </SCRIPT>";
         exit();
@@ -339,8 +355,8 @@ if ($stmt = mysqli_prepare($db_connect, $name_query_sub)) {
     } catch (Exception $e) {
         $message = 'Giá trị ID đã tồn tại trong bảng phụ';
 
-        echo "<SCRIPT> //not showing me this
-                window.location.replace('addProduct.php');
+        echo "<SCRIPT>
+                window.location.replace('addProductUI.php');
                 alert('$message')
             </SCRIPT>";
         exit();
