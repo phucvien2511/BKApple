@@ -10,7 +10,7 @@
 
 <body>
     <div class="login-container">
-        <h1 class="login-title">Đăng nhập</h1>
+        <h1 class="login-title">Thay đổi mật khẩu</h1>
         <form method="post">
             <div class="form-group">
                 <label for="username">Tên đăng nhập</label>
@@ -20,11 +20,15 @@
                 <label for="password">Mật khẩu</label>
                 <input type="password" id="password" name="password" placeholder="Nhập mật khẩu">
             </div>
-            <button id="submit-btn" name="submit-btn" type="submit">Đăng nhập</button>
+            <div class="form-group">
+                <label for="password2">Xác nhận mật khẩu</label>
+                <input type="password" id="password2" name="password2" placeholder="Nhập lại mật khẩu">
+            </div>
+            <p id="incorrect-password"></p>
+            <button id="submit-btn" name="submit-btn" type="submit">Đổi mật khẩu</button>
         </form>
         <div class="form-footer">
-            <a href="/php/forgotPassword.php" class="forgot-password">Quên mật khẩu?</a>
-            <div>Bạn chưa có tài khoản? <a href="/php/register.php">Đăng ký tại đây. </a></div>
+            <div>Bạn đã có tài khoản? <a href="/php/login.php">Đăng nhập tại đây. </a></div>
         </div>
     </div>
 </body>
@@ -42,40 +46,27 @@ if (!$db_connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-session_start();
 
 if (isset($_POST["submit-btn"])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $password2 = $_POST['password2'];
+    //Check password
+    if ($password != $password2) {
+        echo "<script>document.querySelector('#incorrect-password').innerText = 'Mật khẩu không khớp, vui lòng nhập lại.';</script>";
+    }
+    else {
+
     
     //Prepare the SQL query
-    $stmt = mysqli_prepare($db_connect, "SELECT * FROM user where username = ? and password = ?");
+    $stmt = mysqli_prepare($db_connect, "UPDATE user SET password = '$password' where username = ?");
     
     //Bind the variables to the placeholders in the prepared statement
-    mysqli_stmt_bind_param($stmt, "ss", $username, $password);
+    mysqli_stmt_bind_param($stmt, "s", $username);
     
     //Execute the prepared statement
     mysqli_stmt_execute($stmt);
-    
-    //Get the result set from the prepared statement
-    $result = mysqli_stmt_get_result($stmt);
-    
-    //Fetch the row from the result set
-    $row = mysqli_fetch_assoc($result);
-    
-    if ($row) {
-        $_SESSION['user_login'] = $username;
-        $_SESSION['user_avatar'] = $row['avatar'];
-        $_SESSION['user_role'] = $row['role'];
-        
-        
-        if ($row['role'] == 'user') {
-            header('Location: /index.php');
-        } else {
-            header('Location: /php/admin/viewProductList.php');
-        }
-    } else {
-        echo '<script>alert("Sai tài khoản hoặc mật khẩu. Vui lòng nhập lại.")</script>';
+    header('Location: /php/login.php');
     }
 }
 ?>

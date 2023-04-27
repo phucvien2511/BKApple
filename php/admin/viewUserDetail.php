@@ -186,7 +186,7 @@ $rows = mysqli_fetch_assoc($result);
                                 echo "{$rows["status"]}";
                                 echo "<td>";
 
-                                echo "<a href='/php/cart/changeOrderStatus.php?id={$rows['orderId']}&status={$rows["status"]}' class='btn btn-primary'>";
+                                echo "<a href='/php/cart/changeOrderStatus.php?id={$rows['orderId']}&status={$rows["status"]}' class='btn btn-primary order-manage".$rows['orderId']."'>";
                                 if ($rows['status'] == 'Chưa xác nhận') {
                                     echo "Duyệt đơn";
                                 }
@@ -196,10 +196,10 @@ $rows = mysqli_fetch_assoc($result);
                                 else if ($rows['status'] == 'Đang giao hàng') {
                                     echo "Hoàn thành";
                                 }
-                                
                                 echo "</a>";
                                 echo "</td>";
                                 echo "</tr>";
+                                //echo "<script>alert('Cập nhật trạng thái cho đơn hàng thành công!');</script>";
                             }
                             ?>
                         </tbody>

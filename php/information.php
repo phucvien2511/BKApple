@@ -8,12 +8,13 @@
     <title>Thông tin cá nhân</title>
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/information.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/information.css">
+
 </head>
 
 <body>
-    <?php include 'header.php'; ?>
+    <?php include 'header.php' ?>
     <?php
     $servername = "localhost";
     $username = "root";
@@ -34,7 +35,6 @@
 
         // Fetch the first row as an associative array
         $row = mysqli_fetch_assoc($result);
-    
         // Extract customer information into variables
         $name = $row["name"];
         $address = $row["address"];
@@ -78,8 +78,7 @@
             </form>
         </div>
     </div>
-
-    
+    <?php include 'footer.php' ?>    
 
     <!-- Update Modal -->
 

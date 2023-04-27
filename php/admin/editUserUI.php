@@ -55,7 +55,7 @@ $rows = mysqli_fetch_assoc($result);
                             </div>
 
                             <div class="form-floating mb-3 mt-3">
-                                <input type="text" class="form-control" id="customerpassword" placeholder="Enter password" name="customerpassword" required value="<?php echo $rows['password']; ?>">
+                                <input type="password" class="form-control" id="customerpassword" placeholder="Enter password" name="customerpassword" required value="<?php echo $rows['password']; ?>">
                                 <label for="customerpassword">Mật khẩu</label>
                                 <div class="invalid-feedback">
                                     Mật khẩu sai cú pháp.
@@ -84,8 +84,8 @@ $rows = mysqli_fetch_assoc($result);
                             </div>
 
                             <div class="form-floating mb-3 mt-3">
-                                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" value="<?php echo "{$rows['mail']}"; ?>">
-                                <label for="email">Email</label>
+                                <input type="mail" class="form-control" id="mail" placeholder="Enter email" name="mail" value="<?php echo "{$rows['mail']}"; ?>">
+                                <label for="mail">Email</label>
                                 <div class="invalid-feedback">
                                     Email sai cú pháp.
                                 </div>

@@ -21,7 +21,7 @@ if (!$db_connect) {
 }
 $name_query = "SELECT * FROM product WHERE ID = ?";
 $stmt = mysqli_prepare($db_connect, $name_query);
-mysqli_stmt_bind_param($stmt, "i", $product_id);
+mysqli_stmt_bind_param($stmt, "s", $product_id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $rows = mysqli_fetch_assoc($result);

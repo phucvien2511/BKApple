@@ -31,17 +31,13 @@
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
             </div>
             <div class="carousel-inner">
                 <a class="carousel-item active" href="/php/iphone.php?classify=iphone14">
                     <img src="/images/iphone/banner1.png" class="d-block w-100" alt="Banner 1">
                 </a>
                 <a class="carousel-item" href="/php/iphone.php?classify=iphone11">
-                    <img src="/images/iphone/banner2.png" class="d-block w-100" alt="Banner 2">
-                </a>
-                <a class="carousel-item" href="/php/product.php?product=IPHONE14PROMAX_256">
-                    <img src="/images/iphone/banner3.png" class="d-block w-100" alt="Banner 3">
+                    <img src="/images/iphone/banner3.png" class="d-block w-100" alt="Banner 2">
                 </a>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
