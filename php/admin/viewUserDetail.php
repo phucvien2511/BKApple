@@ -124,20 +124,23 @@ $rows = mysqli_fetch_assoc($result);
                     </div>
                 </div>
                 <div class="row">
-                    <h2>Lịch sử mua hàng (Đang lấy tạm từ giỏ hàng nha :>)</h2>
+                    <h2>Lịch sử mua hàng</h2>
                     <table class="table">
                         <thead>
                             <tr>
+                                <th scope="col">Mã đơn</th>
+                                <th scope="col">Ngày đặt hàng</th>
                                 <th scope="col">Sản phẩm</th>
-                                <th scope="col">Số lượng</th>
                                 <th scope="col">Đơn giá</th>
+                                <th scope="col">Trạng thái</th>
+                                <th scope="col">Quản lý</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $name_query = "SELECT * FROM cart WHERE customerId = '{$rows['username']}';";
+                            $name_query = "SELECT * FROM orders WHERE customerId = '{$rows['username']}';";
                             $result = mysqli_query($db_connect, $name_query);
-
+                            $username = $rows['username'];
                             $number_of_product = mysqli_num_rows($result);
                             if ($number_of_product == 0) {
                                 echo "<tr>";
@@ -146,14 +149,55 @@ $rows = mysqli_fetch_assoc($result);
                             }
 
                             while ($rows = mysqli_fetch_assoc($result)) {
-                                $product_query = "SELECT * FROM product WHERE id = '{$rows['productId']}';";
-                                $product_result = mysqli_query($db_connect, $product_query);
-                                $product = mysqli_fetch_assoc($product_result);
+                                //Set 2 column id and date as th
                                 echo "<tr>";
-                                echo "<th scope='row'>{$product["productName"]}</th>";
-                                echo "<td>{$rows["quantity"]}</td>";
+                                echo "<th scope='row'>{$rows["orderId"]}</th>";
+                                echo "<td>{$rows["date"]}</td>";
+
+                                $order_product_query = "SELECT * FROM order_product WHERE customerId = '$username' AND orderId = '{$rows['orderId']}';";
+                                $order_product_result = mysqli_query($db_connect, $order_product_query);
                                 echo "<td>";
-                                echo $product['price'] * $rows['quantity'];
+                                $orderPrice = 0;
+                                while($order_product = mysqli_fetch_assoc($order_product_result)) {
+                                    $product_query = "SELECT * FROM product WHERE id = '{$order_product['productId']}';";
+                                    $product_result = mysqli_query($db_connect, $product_query);
+                                    $product = mysqli_fetch_assoc($product_result);
+                                    
+                                    // echo "<th scope='row'>{$product["productName"]}</th>";
+                                    // echo "<td>{$order_product["quantity"]}</td>";
+                                    // echo "<td>";
+                                    // echo $product['price'] * $order_product['quantity'];
+                                    // echo "</td>";
+                                    // echo "</tr>";
+                                    // echo "<tr>";
+                                    // echo "<th scope='row'>{$order_product["orderId"]}</th>";
+                                    // echo "<td>{$rows["date"]}</td>";
+                                    // echo "</tr>";
+                                    //Stack all product name into 1 column
+                                    echo "{$product["productName"]}";
+                                    echo "  x{$order_product["quantity"]}<br>";
+                                    $orderPrice += $product['price'] * $order_product['quantity'];
+                                }
+                                echo "</td>";
+                                echo "<td>";
+                                echo number_format($orderPrice, 0, ',', '.') . 'đ';
+                                echo "</td>";
+                                echo "<td>";
+                                echo "{$rows["status"]}";
+                                echo "<td>";
+
+                                echo "<a href='/php/cart/changeOrderStatus.php?id={$rows['orderId']}&status={$rows["status"]}' class='btn btn-primary'>";
+                                if ($rows['status'] == 'Chưa xác nhận') {
+                                    echo "Duyệt đơn";
+                                }
+                                else if ($rows['status'] == 'Đang xử lý') {
+                                    echo "Giao hàng";
+                                }
+                                else if ($rows['status'] == 'Đang giao hàng') {
+                                    echo "Hoàn thành";
+                                }
+                                
+                                echo "</a>";
                                 echo "</td>";
                                 echo "</tr>";
                             }

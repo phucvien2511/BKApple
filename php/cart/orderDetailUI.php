@@ -34,12 +34,25 @@ if (!$db_connect) {
         $productList = array();
         $quantityList = array();
         while ($order = mysqli_fetch_assoc($order_result)) {
-            $product_query = "SELECT * from product where id = '$order[productId]'";
+            $product_query = "SELECT * from product where id = '{$order['productId']}'";
             $product_result = mysqli_query($db_connect, $product_query);
             $product = mysqli_fetch_assoc($product_result);
             $productList[] = $product;
             $quantityList[] = $order['quantity'];
-            
+            $capacity = '';
+            if (substr($order['productId'], 0, 6) == 'IPHONE') {
+                $capacity = explode('_', $order['productId'])[1];
+                if ($capacity == '1024') {
+                    $capacity = '1TB';
+                }
+                else {
+                    $capacity = $capacity . 'GB';
+                }
+            }
+            // //Update sold quantity for each product
+            // $sold = $product['sold'] + $order['quantity'];
+            // $update_query = "UPDATE product SET sold = '$sold' WHERE id = '{$order['productId']}'";
+            // mysqli_query($db_connect, $update_query);
         }
         ?>
         <!-- End of Header -->
@@ -54,20 +67,41 @@ if (!$db_connect) {
                     echo '<h6 class="my-3 justify-content-between fw-bold">Chi tiết đơn hàng ID = ' . $orderId . '</h6>';
                     echo '<table class="order-table">';
                     echo '<th>STT</th>';
+                    echo '<th></th>';
                     echo '<th>Tên sản phẩm</th>';
                     echo '<th>Số lượng</th>';
                     echo '<th>Giá</th>';
                     echo '<th>Thành tiền</th>';
+                    $totalPrice = 0;
                     for ($i = 0; $i < count($productList); $i++) {
                         echo '<tr>';
                         echo '<td>' . ($i + 1) . '</td>';
-                        echo '<td>' . $productList[$i]['productName'] . '</td>';
+                        $colorList = explode(',', $productList[$i]['color']);
+                        //Check length of color list
+                        if (count($colorList) == 1) {
+                            $color_img_path = '.png';
+                        }
+                        else {
+                            $color_img_path = '_' . explode(',', $productList[$i]['color'])[0] . '.png';
+                        }
+                        echo '<td style="width:100px"><img src="' . $productList[$i]['thumbnail'] . $color_img_path. '" alt="Order img" width="100px"></td>';
+                        echo '<td>' . $productList[$i]['productName'] . ' ' . $capacity.'</td>';
                         echo '<td>' . $quantityList[$i] . '</td>';
                         echo '<td>' . number_format($productList[$i]['price'], 0, '.', '.') . 'đ'  . '</td>';
                         echo '<td>' . number_format($productList[$i]['price'] * $quantityList[$i], 0, '.', '.') . 'đ' . '</td>';
                         echo '</tr>';
+                        $totalPrice += $productList[$i]['price'] * $quantityList[$i];
                     }
+
+                    echo '<tr>';
+                    echo '<td></td>';
+                    echo '<td></td>';
+                    echo '<td></td>';
+                    echo '<td></td>';
+                    echo '<td>Tổng: </td>';
+                    echo '<td class="py-3"><div class="fw-bold" style="font-size:18px;">' . number_format($totalPrice, 0, '.', '.') . 'đ</div></td>';
                     echo '</table>';
+                    
                 }
                 ?>
 

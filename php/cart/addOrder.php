@@ -52,6 +52,14 @@ $result = mysqli_stmt_get_result($stmt);
 while ($cart = mysqli_fetch_assoc($result)) {
     $order_product_query = "INSERT INTO order_product (orderId, customerId, productId, quantity) VALUES ('{$orderId}', '{$_SESSION['user_login']}', '{$cart['productId']}', '{$cart['quantity']}');";
     mysqli_query($db_connect, $order_product_query);
+    //Update sold quantity of product
+    $product_query = "SELECT * FROM product WHERE id = '{$cart['productId']}'";
+    $product_result = mysqli_query($db_connect, $product_query);
+    $product = mysqli_fetch_assoc($product_result);
+    $sold = $product['sold'] + $cart['quantity'];
+    $update_query = "UPDATE product SET sold = '{$sold}' WHERE id = '{$cart['productId']}'";
+    mysqli_query($db_connect, $update_query);
+    
 }
 //Step 3: Delete all products in cart
 $delete_query = "DELETE FROM cart WHERE customerId = ?";
